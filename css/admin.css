@@ -1,0 +1,52 @@
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f4f7fb;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(12,20,40,0.06);
+}
+
+h1, h2, h3 {
+  color: #0f6cff;
+}
+
+ul#estimateList {
+  list-style: none;
+  padding: 0;
+}
+
+ul#estimateList li {
+  padding: 10px;
+  background: #eef3ff;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+ul#estimateList li:hover {
+  background: #d7e3ff;
+}
+
+#detailItems label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+button {
+  background: #0f6cff;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 8px 0;
+  font-size: 14px;
+}

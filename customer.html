@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>성진글로벌 경영지원 서비스</title>
+  <link rel="stylesheet" href="/css/customer.css">
+</head>
+<body>
+  <div class="container">
+    <h1>환영합니다!</h1>
+    <div class="buttons">
+      <button id="viewEstimates">신청 내역 보기</button>
+      <button id="createEstimate">신청하기</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('viewEstimates').addEventListener('click', () => {
+      window.location.href = '/checklist.html';
+    });
+
+    document.getElementById('createEstimate').addEventListener('click', () => {
+      window.location.href = '/estimate.html';
+    });
+  </script>
+</body>
+</html>

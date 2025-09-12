@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>성진글로벌 경영지원 서비스</title>
+  <link rel="stylesheet" href="/css/customer.css">
+</head>
+<body>
+  <div class="container">
+    <h1>견적서 신청</h1>
+    <div class="checklist">
+      <label><input type="checkbox" class="item" data-price="50000"> 서비스 A (₩50,000)</label><br>
+      <label><input type="checkbox" class="item" data-price="30000"> 서비스 B (₩30,000)</label><br>
+      <label><input type="checkbox" class="item" data-price="20000"> 서비스 C (₩20,000)</label><br>
+    </div>
+    <button id="submitEstimate">신청하기</button>
+  </div>
+
+  <script>
+    document.getElementById('submitEstimate').addEventListener('click', () => {
+      const checkedItems = Array.from(document.querySelectorAll('.item:checked'));
+      if (!checkedItems.length) {
+        alert('항목을 선택해주세요.');
+        return;
+      }
+
+      let total = 0;
+      checkedItems.forEach(item => total += parseInt(item.dataset.price));
+
+      alert(`신청 완료! 총액 ₩${total.toLocaleString()}`);
+      window.location.href = '/cus_estimate.html';
+    });
+  </script>
+</body>
+</html>

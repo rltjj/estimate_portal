@@ -122,7 +122,8 @@ button.ghost {
     border-radius: 10px;
     background: #fff;
     border: 1px solid #eef3ff;
-    min-height: 230px
+    min-height: 230px;
+    min-width: 500px;
 }
 
 .preview-header {
@@ -133,20 +134,29 @@ button.ghost {
 
 .company-input {
     display: flex;
-    gap: 10px;
-    align-items: center
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.company-input label {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap; 
 }
 
 .company-input input {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #e6e9f2
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #e6e9f2;
+    flex: 1 1 120px;
+    min-width: 80px;
 }
 
 .preview-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px
+    margin-top: 10px;
 }
 
 .invoice-items {

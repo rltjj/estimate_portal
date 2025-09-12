@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const managerInput = document.getElementById('managerName');
     const phoneInput = document.getElementById('managerPhone');
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-
+    const params = new URLSearchParams(window.location.search);
+    const estimateId = params.get('estimateId');
 
     // 데이터
     const ITEMS = [
@@ -32,6 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'company_profile', label: '회사소개서/IR', price: 1200000, description: "투자자·금융기관 커뮤니케이션 도구\nIR 자료는 모태펀드·정책펀드·창투사 매칭 투자에 필요. 정책금융기관 투자 심사 가점. 한국벤처투자 모태펀드 운용지침(2024)." },
         { id: 'video_youtube', label: '영상/유튜브', price: 1500000, description: "홍보·브랜드 신뢰성 강화\n 직접적 가점은 없으나, 투자자·기관 심사 시 기업 신뢰성 제고. ESG·사회적 가치 홍보에 강점. 중소기업 ESG 경영 가이드라인(2023) → “기업 홍보·투명성”은 ESG 가점 요소." }
     ];
+
+    const data = {
+        userInfo: { company: "(주)성진글로벌", manager: "홍길동", phone: "010-1234-5678" },
+        selections: [
+            { id: "ci", qty: 1, price: 250000 },
+            { id: "homepage", qty: 2, price: 500000 }
+        ]
+    };
+
+    companyNameInput.value = data.userInfo.company;
+    managerInput.value = data.userInfo.manager;
+    phoneInput.value = data.userInfo.phone;
+
+    state.selections = {};
+    data.selections.forEach(s => state.selections[s.id] = { qty: s.qty, price: s.price });
 
     let state = {
         items: JSON.parse(JSON.stringify(ITEMS)),
