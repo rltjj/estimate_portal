@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>견적서 생성 플랫폼</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>서비스 체크리스트</h1>
+      <p class="small">견적에 포함할 항목을 선택하세요. 수량과 단가를 조정할 수 있습니다.</p>
+
+      <div class="list" id="checklist"></div>
+
+      <div class="controls">
+
+        <button class="ghost" id="resetBtn">초기화</button>
+      </div>
+
+      <div class="summary">
+        <div>선택합계: <span id="selectedCount">0</span>개</div>
+        <div>총합계: <strong id="totalAmount">₩0</strong></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" id="previewWrap">
+        <div class="preview-header">
+          <div>
+            <h1>견적서 미리보기</h1>
+            <p class="small">PDF 다운로드를 누르면 아래의 내용이 다운로드 됩니다.</p>
+          </div>
+          <div class="company-input">
+            <label>회사명</label>
+            <input id="companyName" value="(주)성진글로벌" />
+            <label>담당자</label>
+            <input id="managerName" value="홍길동" />
+
+            <label>연락처</label>
+            <input id="managerPhone" value="010-1234-5678" />
+          </div>
+        </div>
+
+        <div id="previewArea" class="preview">
+          <div class="placeholder">선택한 항목이 없으면 견적서가 표시되지 않습니다.</div>
+        </div>
+
+        <div class="preview-actions">
+          <button class="ghost" id="downloadPdfBtn" disabled>PDF 다운로드</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>항목 단가/수량 기본값</h1>
+    <p class="small">각 항목의 기본 단가를 조정하면 다음 생성 시 반영됩니다.</p>
+    <div id="pricingEditor"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script src="/script.js"></script>
+</body>
+
+</html>
