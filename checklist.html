@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/css/customer.css">
+  <link rel="stylesheet" href="css/customer.css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
   <script>
     const checklistEl = document.getElementById('checklist');
 
-    fetch('/get_products.php')
+    fetch('get_products.php')
       .then(res => res.json())
       .then(products => {
         products.forEach(p => {
@@ -26,7 +26,7 @@
           div.innerHTML = `
             <label>
               <input type="checkbox" class="item" value="${p.id}">
-              ${p.name}
+              <span>${p.name}</span>
             </label>
           `;
           checklistEl.appendChild(div);
@@ -43,7 +43,7 @@
       const selectedIds = checkedItems.map(item => item.value);
 
       alert(`신청 완료! 선택된 항목: ${selectedIds.join(', ')}`);
-      window.location.href = '/customer.html';
+      window.location.href = 'customer.html';
     });
   </script>
 </body>

@@ -20,8 +20,8 @@ document.getElementById('emailLogin').addEventListener('click', () => {
 
 function redirectAfterLogin(role) {
     if (role === 'admin') {
-        window.location.href = '/admin.html';
+        window.location.href = 'admin.html';
     } else {
-        window.location.href = '/customer.html';
+        window.location.href = 'customer.html';
     }
 }

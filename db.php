@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db   = 'estimate';
 $user = 'root';       // DB 사용자
-$pass = 'qpwoei/!10';   // DB 비밀번호
+$pass = '';   // DB 비밀번호
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

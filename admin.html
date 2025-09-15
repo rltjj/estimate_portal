@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>관리자 - 신청 내역</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="container">
@@ -47,7 +47,7 @@
       btn.addEventListener('click', e => {
         const id = e.target.getAttribute('data-id');
         // 상세보기 페이지로 이동 (id 전달)
-        window.location.href = `/estimate.html?estimateId=${id}`;
+        window.location.href = `estimate.html?estimateId=${id}`;
       });
     });
   </script>
