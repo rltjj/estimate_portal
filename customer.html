@@ -10,18 +10,21 @@
   <div class="container">
     <h1>환영합니다!</h1>
     <div class="buttons">
-      <button id="viewEstimates">신청 내역 보기</button>
       <button id="createEstimate">신청하기</button>
     </div>
   </div>
 
-  <script>
-    document.getElementById('viewEstimates').addEventListener('click', () => {
-      window.location.href = '/checklist.html';
-    });
+  <div class="container">
+    <h1>신청 내역</h1>
+    <ul id="estimateList">
+      <li>2025-09-12 | 서비스 A, 서비스 B | 총액 ₩80,000</li>
+      <li>2025-09-11 | 서비스 C | 총액 ₩20,000</li>
+    </ul>
+  </div>
 
+  <script>
     document.getElementById('createEstimate').addEventListener('click', () => {
-      window.location.href = '/estimate.html';
+      window.location.href = '/checklist.html';
     });
   </script>
 </body>
