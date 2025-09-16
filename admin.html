@@ -15,6 +15,7 @@
           <th>고객명</th>
           <th>회사명</th>
           <th>신청일</th>
+          <th>상태</th>
           <th>상세보기</th>
         </tr>
       </thead>
@@ -27,7 +28,7 @@
   <script>
     // 예시 데이터 (나중에 DB에서 fetch로 가져오기)
     const estimates = [
-      { id: 1, userName: "홍길동", company: "(주)성진글로벌", date: "2025-09-12" },
+      { id: 1, userName: "홍길동", company: "(주)성진글로벌", date: "2025-09-12", state: "신청됨" },
       { id: 2, userName: "김철수", company: "(주)테스트컴퍼니", date: "2025-09-11" },
     ];
 
@@ -38,6 +39,7 @@
         <td>${est.userName}</td>
         <td>${est.company}</td>
         <td>${est.date}</td>
+        <td>${est.state}</td>
         <td><button data-id="${est.id}">상세보기</button></td>
       `;
       tbody.appendChild(tr);

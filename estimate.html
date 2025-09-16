@@ -7,17 +7,24 @@
   <link rel="stylesheet" href="css/style.css?v=<?=filemtime('css/style.css')?>">
 </head>
 <body>
+  <div class="buttons">
+      <button id="return">신청 내역으로 돌아가기</button>
+  </div>
+
+  <script>
+    document.getElementById('return').addEventListener('click', () => {
+      window.location.href = 'admin.html';
+    });
+  </script>
+
   <div class="container">
     <div class="card">
       <h1>서비스 체크리스트 (관리자)</h1>
       <p class="small">고객 신청 내역을 확인 및 수정 가능합니다.</p>
-
       <div class="list" id="checklist"></div>
-
       <div class="controls">
         <button class="ghost" id="resetBtn">초기화</button>
       </div>
-
       <div class="summary">
         <div>선택합계: <span id="selectedCount">0</span>개</div>
         <div>총합계: <strong id="totalAmount">₩0</strong></div>
@@ -56,6 +63,5 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script src="js/admin.js"></script>
-  <script src="js/script.js"></script>
 </body>
 </html>

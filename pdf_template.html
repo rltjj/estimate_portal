@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>견적서</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/template.css?v=<?=filemtime('css/template.css')?>">
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            background: #fff;
+        }
+
+        body {
+            font-family: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+            color: #111;
+        }
+
+        .sheet {
+            width: calc(210mm - 24mm);
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 0 12mm;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .logo img {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .title-block {
+            text-align: center;
+            flex: 1;
+        }
+
+        .title {
+            font-size: 28px;
+            letter-spacing: 0.2em;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .ref-box {
+            margin-top: 8px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            font-size: 12px;
+        }
+
+        .ref-box .cell {
+            border: 1px solid #333;
+            padding: 6px 8px;
+            min-width: 140px;
+        }
+
+        .issuer {
+            margin-top: 6px;
+            text-align: right;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #333;
+            padding: 8px;
+            font-size: 12.5px;
+        }
+
+        .table th {
+            background: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .to-table {
+            margin-top: 10px;
+        }
+
+        .to-table th {
+            width: 18%;
+        }
+
+        .to-table td {
+            width: 32%;
+        }
+
+        .from-table {
+            margin-top: 10px;
+        }
+
+        .from-table th {
+            width: 18%;
+        }
+
+        .from-table td {
+            width: 32%;
+        }
+
+        .items {
+            margin-top: 12px;
+        }
+
+        .items th:nth-child(1) {
+            width: 8%;
+        }
+
+        .items th:nth-child(2) {
+            width: 22%;
+        }
+
+        .items th:nth-child(3) {
+            width: 32%;
+        }
+
+        .items th:nth-child(4) {
+            width: 10%;
+        }
+
+        .items th:nth-child(5) {
+            width: 10%;
+        }
+
+        .items th:nth-child(6) {
+            width: 9%;
+        }
+
+        .items th:nth-child(7) {
+            width: 9%;
+        }
+
+        .sum-table {
+            margin-top: 8px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .sum-table th,
+        .sum-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            font-size: 12.5px;
+        }
+
+        .sum-table th {
+            background: #f8fafc;
+            width: 18%;
+        }
+
+        .sum-table td {
+            text-align: right;
+        }
+
+        .detail-memo {
+            margin-top: 8px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .detail-memo th,
+        .detail-memo td {
+            border: 1px solid #333;
+            padding: 8px;
+            font-size: 12.5px;
+        }
+
+        .detail-memo th {
+            background: #f8fafc;
+        }
+
+        .detail-memo th:nth-child(1) {
+            width: 24%;
+        }
+
+        .detail-memo td {
+            text-align: left;
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 11.5px;
+            color: #333;
+        }
+
+        .note ul {
+            margin: 6px 0 0 16px;
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 11.5px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bank {
+            border: 1px solid #333;
+            padding: 8px 10px;
+        }
+
+        .print-hide {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: #111;
+            color: #fff;
+            border: 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn.secondary {
+            background: #e5e7eb;
+            color: #111;
+        }
+
+        @media print {
+            .print-hide {
+                display: none !important;
+            }
+
+            .logo {
+                border: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sheet">
+
+        <!-- 상단 헤더 -->
+        <div class="header">
+            <div class="logo"><img id="log" src="log.jpg" alt="성진글로벌 로고"></div>
+            <div class="title-block">
+                <div class="title">견 &nbsp; 적 &nbsp; 서</div>
+                <div style="font-size:12px; margin-top:6px;">귀사의 무궁한 발전을 기원합니다.</div>
+            </div>
+            <div style="width:160px;"></div>
+        </div>
+
+        <!-- 참조번호/일자 -->
+        <div class="ref-box">
+            <div class="cell">견적번호 : {{NUM}}</div>
+            <div class="cell">작성일자 : {{DATE}}</div>
+        </div>
+        <div class="issuer">성진글로벌 귀중</div>
+
+        <!-- 수신자(거래처) -->
+        <table class="table to-table">
+            <tr>
+                <th>수 신</th>
+                <td>{{COMPANY}}</td>
+                <th>담당자</th>
+                <td>{{MANAGER}}</td>
+                <th>연락처</th>
+                <td>{{PHONE}}</td>
+            </tr>
+        </table>
+
+        <!-- 공급자(발행처) -->
+        <!-- 공급자(발행처) -->
+        <table class="table from-table">
+            <tr>
+                <th>공급자</th>
+                <td>(주)성진글로벌</td>
+                <th>등록번호</th>
+                <td>174-88-03233</td>
+                <th>대표자</th>
+                <td>김수진  <img id="dojan" src="dojan.png" alt="인감 도장" width=20px;></td>
+            </tr>
+            <tr>
+                <th>업태</th>
+                <td>도매 및 소매업</td>
+                <th>종목</th>
+                <td >상품 종합 도매업</td>
+                <th>연락처</th>
+                <td>051-936-1255</td>
+            </tr>
+            <tr>
+                <th>주 소</th>
+                <td colspan="5">부산광역시 남구 신선로 410, 2층 210호 국제산학협력관(21호관)(용당동, 동명대학교)</td>
+            </tr>
+        </table>
+
+
+        <!-- 품목 내역 -->
+        <table class="table items">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>품목(서비스)</th>
+                    <th>단가(원)</th>
+                    <th>수량</th>
+                    <th>금액</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ITEM_ROWS}}
+            </tbody>
+        </table>
+
+        <!-- 합계 -->
+        <table class="sum-table">
+            <tr>
+                <th>공급가액</th>
+                <td>{{SUPPLY}}</td>
+                <th>세액(10%)</th>
+                <td>{{TAX}}</td>
+                <th>합계</th>
+                <td>{{TOTAL}}</td>
+            </tr>
+        </table>
+
+        <!-- 상품 상세 설명 -->
+        <table class="detail-memo">
+            <thead>
+                <tr>
+                    <th>상품명</th>
+                    <th>상세 설명</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{DETAIL_ROWS}}
+            </tbody>
+        </table>
+
+        <!-- 비고/안내 -->
+        <div class="note">
+            ※ 관공서·정부 납부 등록세/수수료·부가가치세 등은 별도 청구됩니다.<br>
+            ※ 위의 제안가는 대행 (컨설팅/서류작성/절차관리) 기준이며, 실제 심사 수수료·공공수수료·우편/인지대 등은 기관 고시 금액을 적용합니다.<br>
+            ※ 공고/기간별 요구서류가 상이할 수 있으므로 사전 체크리스트로 확정 후 진행합니다.
+        </div>
+
+        <!-- 입금계좌 -->
+        <div class="footer">
+            <div class="bank"><strong>입금계좌</strong> : 부산 은행 113-20193-66100 (예금주: 성진글로벌)</div>
+            <div>담당: 하상민 (010-8488-0588)</div>
+        </div>
+    </div>
+</body>
+
+</html>
