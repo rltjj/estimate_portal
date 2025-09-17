@@ -11,7 +11,15 @@
 <body>
   <div class="container">
     <h1>견적서 신청</h1>
+
+    <div class="user-info">
+      <label>회사명: <input type="text" id="company_name" required></label><br>
+      <label>담당자 이름: <input type="text" id="user_name" required></label><br>
+      <label>연락처: <input type="text" id="phone" required></label>
+    </div>
+
     <div class="list" id="checklist"></div>
+
     <button id="submitEstimate">신청하기</button>
   </div>
 
@@ -24,27 +32,58 @@
         products.forEach(p => {
           const div = document.createElement('div');
           div.innerHTML = `
-            <label>
-              <input type="checkbox" class="item" value="${p.id}">
-              <span>${p.name}</span>
-            </label>
-          `;
+        <label>
+          <input type="checkbox" class="item" value="${p.id}" data-price="${p.price}">
+          <span>${p.name}</span>
+        </label>
+      `;
           checklistEl.appendChild(div);
         });
       });
 
     document.getElementById('submitEstimate').addEventListener('click', () => {
+      const company_name = document.getElementById('company_name').value.trim();
+      const user_name = document.getElementById('user_name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!company_name || !user_name || !phone) {
+        alert('회사명, 이름, 연락처를 모두 입력해주세요.');
+        return;
+      }
+
       const checkedItems = Array.from(document.querySelectorAll('.item:checked'));
       if (!checkedItems.length) {
         alert('항목을 선택해주세요.');
         return;
       }
 
-      const selectedIds = checkedItems.map(item => item.value);
+      const selectedProducts = checkedItems.map(item => ({
+        product_id: item.value,
+        price: item.dataset.price
+      }));
 
-      alert(`신청 완료! 선택된 항목: ${selectedIds.join(', ')}`);
-      window.location.href = 'customer.html';
+      // DB로 전송
+      fetch('submit_application.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          company_name,
+          user_name,
+          phone,
+          products: selectedProducts
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('신청 완료!');
+            window.location.href = 'customer.html';
+          } else {
+            alert('신청 실패: ' + data.message);
+          }
+        });
     });
+
   </script>
 </body>
 
