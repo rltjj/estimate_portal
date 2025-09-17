@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function generatePdf() {
     try {
       const estimateNumber = await fetchEstimateNumber();
-      let html = await (await fetch('pdf_template.html')).text();
+      let html = await (await fetch(`pdf_template.html?${Date.now()}`)).text();
 
       const company = (companyNameInput.value || '').trim();
       const manager = (managerInput.value || '').trim();
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .replace('{{TOTAL}}', formatWon(state.total));
 
       html2pdf().set({
-        margin: [10, 10, 10, 10],
+        margin: [5, 5, 5, 5],
         filename: `${company || '견적서'}_${estimateNumber}.pdf`,
         image: { type: 'jpeg', quality: 0.96 },
         html2canvas: { scale: 2, useCORS: true },

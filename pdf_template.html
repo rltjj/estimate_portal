@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>견적서</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/template.css?v=<?=filemtime('css/template.css')?>">
     <style>
         @page {
             size: A4;
@@ -26,7 +25,6 @@
 
         .sheet {
             width: calc(210mm - 24mm);
-            min-height: 297mm;
             margin: 0 auto;
             padding: 0 12mm;
             box-sizing: border-box;
@@ -48,7 +46,7 @@
         }
 
         .logo img {
-            height: 60px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -129,6 +127,15 @@
 
         .from-table td {
             width: 32%;
+            height: 20px;
+        }
+
+        .from-table td img#dojan {
+            max-height: 30px;
+            height: auto;
+            max-width: 100%;
+            vertical-align: middle;
+            margin-left: 8px;
         }
 
         .items {
@@ -309,7 +316,7 @@
                 <th>등록번호</th>
                 <td>174-88-03233</td>
                 <th>대표자</th>
-                <td>김수진  <img id="dojan" src="dojan.png" alt="인감 도장" width=20px;></td>
+                <td>김수진<img id="dojan" src="dojan.png" alt="인감 도장"></td>
             </tr>
             <tr>
                 <th>업태</th>
