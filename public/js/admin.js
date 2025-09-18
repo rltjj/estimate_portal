@@ -10,6 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const phoneInput = document.getElementById('managerPhone');
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
+  const checkAllBtn = document.getElementById('checkAllBtn');
+
+  checkAllBtn.addEventListener('click', () => {
+    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+    checkboxes.forEach(cb => {
+      cb.checked = !allChecked;
+      cb.dispatchEvent(new Event('change'));
+    });
+
+    checkAllBtn.textContent = allChecked ? '모두 체크' : '모두 해제';
+  });
+
+
   let ITEMS = [];
   let state = {
     items: [],
@@ -23,22 +38,59 @@ document.addEventListener('DOMContentLoaded', () => {
     return '₩' + (Number(n) || 0).toLocaleString();
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const applicationId = urlParams.get('estimateId');
+
   // DB에서 상품 불러오기
-  fetch('get_products.php')
+  fetch('/estimate/app/controllers/get_products.php')
     .then(res => res.json())
-    .then(data => {
-      ITEMS = data.map(p => ({
+    .then(products => {
+      // 전체 상품 세팅
+      ITEMS = products.map(p => ({
         id: String(p.id),
         label: p.name,
         price: parseInt(p.price || 0),
         description: p.description || '-'
       }));
       state.items = JSON.parse(JSON.stringify(ITEMS));
-      renderChecklist();
-      renderPricingEditor();
-      updateSummary();
-    })
-    .catch(() => alert('상품 불러오기 실패'));
+
+      // 상세보기일 경우
+      if (applicationId) {
+        fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
+          .then(res => res.json())
+          .then(data => {
+            const application = data.application || {};
+            const selectedProducts = data.products || [];
+
+            companyNameInput.value = application.company_name || '';
+            managerInput.value = application.user_name || '';
+            phoneInput.value = application.phone || '';
+
+
+            selectedProducts.forEach(sel => {
+              const item = state.items.find(i => i.id === String(sel.product_id));
+              if (item) {
+                state.selections[item.id] = { qty: sel.quantity, price: sel.price };
+              }
+            });
+            renderChecklist();
+            renderPricingEditor();
+
+            Object.keys(state.selections).forEach(id => {
+              const cb = checklistEl.querySelector(`[data-id="${id}"]`);
+              const qtyInput = checklistEl.querySelector(`[data-qty-id="${id}"]`);
+              if (cb) cb.checked = true;
+              if (qtyInput) qtyInput.value = state.selections[id].qty;
+            });
+
+            updateSummary();
+          });
+      } else {
+        renderChecklist();
+        renderPricingEditor();
+        updateSummary();
+      }
+    });
 
   function renderChecklist() {
     checklistEl.innerHTML = '';
@@ -184,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DB에서 견적번호 받아오기
   async function fetchEstimateNumber() {
-    const res = await fetch('get_new_estimate_number.php');
+    const res = await fetch('/estimate/app/controllers/get_new_estimate_number.php');
     const data = await res.json();
     if (data.number) return data.number;
     else throw new Error('견적번호 생성 실패');
@@ -193,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function generatePdf() {
     try {
       const estimateNumber = await fetchEstimateNumber();
-      let html = await (await fetch(`pdf_template.html?${Date.now()}`)).text();
+      let html = await (await fetch(`/estimate/app/views/pdf_template.html?${Date.now()}`)).text();
 
       const company = (companyNameInput.value || '').trim();
       const manager = (managerInput.value || '').trim();

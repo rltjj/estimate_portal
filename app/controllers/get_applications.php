@@ -5,9 +5,8 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-require 'config.php'; // $pdo 연결
+require_once __DIR__ . '/../../bootstrap.php';
 
-// 로그인 세션 확인
 if(!isset($_SESSION['user_id'])){
     echo json_encode([]);
     exit;

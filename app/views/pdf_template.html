@@ -196,6 +196,18 @@
             margin-top: 8px;
             width: 100%;
             border-collapse: collapse;
+            page-break-inside: auto;
+        }
+
+        .detail-memo tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        .sum-table,
+        .note,
+        .footer {
+            page-break-inside: avoid;
         }
 
         .detail-memo th,
@@ -280,7 +292,7 @@
 
         <!-- 상단 헤더 -->
         <div class="header">
-            <div class="logo"><img id="log" src="log.jpg" alt="성진글로벌 로고"></div>
+            <div class="logo"><img id="log" src="/estimate/public/images/log.jpg" alt="성진글로벌 로고"></div>
             <div class="title-block">
                 <div class="title">견 &nbsp; 적 &nbsp; 서</div>
                 <div style="font-size:12px; margin-top:6px;">귀사의 무궁한 발전을 기원합니다.</div>
@@ -316,13 +328,13 @@
                 <th>등록번호</th>
                 <td>174-88-03233</td>
                 <th>대표자</th>
-                <td>김수진<img id="dojan" src="dojan.png" alt="인감 도장"></td>
+                <td>김수진<img id="dojan" src="/estimate/public/images/dojan.png" alt="인감 도장"></td>
             </tr>
             <tr>
                 <th>업태</th>
                 <td>도매 및 소매업</td>
                 <th>종목</th>
-                <td >상품 종합 도매업</td>
+                <td>상품 종합 도매업</td>
                 <th>연락처</th>
                 <td>051-936-1255</td>
             </tr>

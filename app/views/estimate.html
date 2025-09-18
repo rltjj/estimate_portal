@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>관리자 - 견적서 상세</title>
-  <link rel="stylesheet" href="css/style.css?v=<?=filemtime('css/style.css')?>">
+  <link rel="stylesheet"
+    href="/estimate/public/css/style.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/style.css')?>">
 </head>
+
 <body>
   <div class="buttons">
-      <button id="return">신청 내역으로 돌아가기</button>
+    <button id="return">신청 내역으로 돌아가기</button>
   </div>
 
   <script>
     document.getElementById('return').addEventListener('click', () => {
-      window.location.href = 'admin.html';
+      window.location.href = '/estimate/app/views/admin.html';
     });
   </script>
 
@@ -24,6 +27,7 @@
       <div class="list" id="checklist"></div>
       <div class="controls">
         <button class="ghost" id="resetBtn">초기화</button>
+        <button class="ghost" id="checkAllBtn">모두 체크</button>
       </div>
       <div class="summary">
         <div>선택합계: <span id="selectedCount">0</span>개</div>
@@ -62,6 +66,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <script src="js/admin.js"></script>
+  <script src="/estimate/public/js/admin.js"></script>
 </body>
+
 </html>

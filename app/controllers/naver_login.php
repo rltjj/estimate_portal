@@ -2,7 +2,7 @@
 session_start();
 
 $client_id = 'd9YL970vJItrZKDjtVDY';
-$redirect_uri = urlencode('http://localhost/estimate/naver_callback.php');
+$redirect_uri = urlencode('http://localhost/estimate/public/naver_callback.php');
 $state = bin2hex(random_bytes(16));
 $_SESSION['naver_state'] = $state;
 

@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 if (!isset($_GET['code'])) {
     exit('코드 없음');
@@ -7,7 +7,6 @@ if (!isset($_GET['code'])) {
 
 $code = $_GET['code'];
 
-// 토큰 요청
 $token_url = "https://oauth2.googleapis.com/token";
 $data = [
     'code' => $code,
@@ -34,7 +33,6 @@ if ($response === FALSE) {
 $token = json_decode($response, true);
 $access_token = $token['access_token'];
 
-// 사용자 정보 가져오기
 $userinfo = file_get_contents("https://www.googleapis.com/oauth2/v2/userinfo?access_token={$access_token}");
 $userinfo = json_decode($userinfo, true);
 
@@ -42,7 +40,6 @@ $email = $userinfo['email'];
 $name = $userinfo['name'] ?? null;
 $provider = 'google';
 
-// DB 확인 및 저장
 $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
@@ -55,17 +52,15 @@ if (!$user) {
     $user_id = $user['id'];
 }
 
-// 세션 생성
 $_SESSION['user_id'] = $user_id;
 $_SESSION['user_name'] = $name;
 $_SESSION['user_email'] = $email;
 
 $_SESSION['user_role'] = $user['role'] ?? 'USER';
 
-// 로그인 완료 후 리디렉션
 if ($_SESSION['user_role'] === 'ADMIN') {
-    header('Location: admin.html');
+    header('Location: /estimate/app/views/admin.html');
 } else {
-    header('Location: customer.html');
+    header('Location: /estimate/app/views/customer.html');
 }
 exit;

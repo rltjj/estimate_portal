@@ -1,6 +1,5 @@
 <?php
-require 'config.php';
-session_start();
+require_once __DIR__ . '/../bootstrap.php';
 
 if (!isset($_GET['code']) || !isset($_GET['state'])) exit('로그인 실패');
 
@@ -36,7 +35,6 @@ $email = $userinfo['response']['email'];
 $name = $userinfo['response']['name'] ?? null;
 $provider = 'naver';
 
-// DB 확인 및 저장
 $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
@@ -49,17 +47,15 @@ if (!$user) {
     $user_id = $user['id'];
 }
 
-// 세션 생성
 $_SESSION['user_id'] = $user_id;
 $_SESSION['user_name'] = $name;
 $_SESSION['user_email'] = $email;
 
 $_SESSION['user_role'] = $user['role'] ?? 'USER';
 
-// 로그인 완료 후 리디렉션
 if ($_SESSION['user_role'] === 'ADMIN') {
-    header('Location: admin.html');
+    header('Location: /estimate/app/views/admin.html');
 } else {
-    header('Location: customer.html');
+    header('Location: /estimate/app/views/customer.html');
 }
 exit;

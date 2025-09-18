@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>관리자 - 신청 내역</title>
+  <link rel="stylesheet"
+    href="/estimate/public/css/style.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/style.css')?>">
+</head>
+
+<body>
+  <div class="buttons">
+    <button id="go">견적서 생성하기</button>
+  </div>
+  <script>
+    document.getElementById('go').addEventListener('click', () => {
+      window.location.href = '/estimate/app/views/estimate.html';
+    });
+  </script>
+
+  <div class="container">
+    <h1>신청 내역 관리</h1>
+    <table id="estimateList">
+      <thead>
+        <tr>
+          <th>고객명</th>
+          <th>회사명</th>
+          <th>신청일</th>
+          <th>상태</th>
+          <th>상세보기</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const tbody = document.querySelector('#estimateList tbody');
+    const statusMap = {
+      "REQUESTED": "신청됨",
+      "QUOTED": "견적 완료",
+      "PAID": "결제됨"
+    };
+
+    fetch('/estimate/app/controllers/get_applications_admin.php')
+      .then(res => res.json())
+      .then(applications => {
+        tbody.innerHTML = "";
+        applications.forEach(app => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${app.userName || '-'}</td>
+            <td>${app.company || '-'}</td>
+            <td>${app.date}</td>
+            <td>${statusMap[app.state] || app.state}</td>
+            <td><button data-id="${app.id}">상세보기</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        tbody.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', e => {
+            const id = e.target.getAttribute('data-id');
+            window.location.href = `/estimate/app/views/estimate.html?estimateId=${id}`;
+          });
+        });
+      })
+      .catch(err => console.error("Fetch error:", err));
+  </script>
+
+</body>
+
+</html>

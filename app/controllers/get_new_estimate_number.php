@@ -1,21 +1,8 @@
 <?php
-$host = 'localhost';
-$db   = 'estimate';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-];
+header('Content-Type: application/json');
+require_once __DIR__ . '/../../bootstrap.php';
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-
-    date_default_timezone_set('Asia/Seoul');
-
     $today = date('ymd');
     $time  = date('Hi'); 
 
