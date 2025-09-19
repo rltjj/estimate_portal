@@ -9,43 +9,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const managerInput = document.getElementById('managerName');
   const phoneInput = document.getElementById('managerPhone');
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-
   const checkAllBtn = document.getElementById('checkAllBtn');
+
+  let ITEMS = [];
+  let state = { items: [], selections: {}, subtotal: 0, vat: 0, total: 0 };
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const applicationId = urlParams.get('estimateId');
 
   checkAllBtn.addEventListener('click', () => {
     const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
     const allChecked = Array.from(checkboxes).every(cb => cb.checked);
 
     checkboxes.forEach(cb => {
-      cb.checked = !allChecked;
-      cb.dispatchEvent(new Event('change'));
+      if (!cb.disabled) { // 필수 항목 제외
+        cb.checked = !allChecked;
+        cb.dispatchEvent(new Event('change'));
+      }
     });
 
     checkAllBtn.textContent = allChecked ? '모두 체크' : '모두 해제';
   });
 
-
-  let ITEMS = [];
-  let state = {
-    items: [],
-    selections: {},
-    subtotal: 0,
-    vat: 0,
-    total: 0
-  };
-
-  function formatWon(n) {
-    return '₩' + (Number(n) || 0).toLocaleString();
-  }
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const applicationId = urlParams.get('estimateId');
+  function formatWon(n) { return '₩' + (Number(n) || 0).toLocaleString(); }
 
   // DB에서 상품 불러오기
   fetch('/estimate/app/controllers/get_products.php')
     .then(res => res.json())
     .then(products => {
-      // 전체 상품 세팅
       ITEMS = products.map(p => ({
         id: String(p.id),
         label: p.name,
@@ -54,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }));
       state.items = JSON.parse(JSON.stringify(ITEMS));
 
-      // 상세보기일 경우
       if (applicationId) {
         fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
           .then(res => res.json())
@@ -66,23 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
             managerInput.value = application.user_name || '';
             phoneInput.value = application.phone || '';
 
-
             selectedProducts.forEach(sel => {
               const item = state.items.find(i => i.id === String(sel.product_id));
-              if (item) {
-                state.selections[item.id] = { qty: sel.quantity, price: sel.price };
-              }
+              if (item) state.selections[item.id] = { qty: sel.quantity, price: sel.price };
             });
+
             renderChecklist();
             renderPricingEditor();
-
-            Object.keys(state.selections).forEach(id => {
-              const cb = checklistEl.querySelector(`[data-id="${id}"]`);
-              const qtyInput = checklistEl.querySelector(`[data-qty-id="${id}"]`);
-              if (cb) cb.checked = true;
-              if (qtyInput) qtyInput.value = state.selections[id].qty;
-            });
-
             updateSummary();
           });
       } else {
@@ -95,15 +75,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderChecklist() {
     checklistEl.innerHTML = '';
     state.items.forEach(item => {
+      const isMandatory = item.id === '18' || item.id === '19'; // 필수 체크 항목
       const div = document.createElement('div');
       div.innerHTML = `
         <label style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
           <div>
-            <input type="checkbox" data-id="${item.id}"> ${item.label} (${formatWon(item.price)})
+            <input type="checkbox" data-id="${item.id}" ${isMandatory ? 'checked disabled' : ''}>
+            ${item.label} (${formatWon(item.price)})
           </div>
           <input type="number" min="1" value="1" data-qty-id="${item.id}" style="width:60px">
         </label>`;
       checklistEl.appendChild(div);
+
+      // 필수 항목은 selections에 자동 추가
+      if (isMandatory) {
+        state.selections[item.id] = { qty: 1, price: item.price };
+      }
     });
 
     checklistEl.querySelectorAll('input[type="checkbox"]').forEach(cb =>
@@ -119,9 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.items.forEach(item => {
       const div = document.createElement('div');
       div.style.marginBottom = '4px';
-      div.innerHTML = `
-        ${item.label}: <input type="number" min="0" value="${item.price}" data-edit-price="${item.id}" style="width:80px">
-      `;
+      div.innerHTML = `${item.label}: <input type="number" min="0" value="${item.price}" data-edit-price="${item.id}" style="width:80px">`;
       pricingEditor.appendChild(div);
     });
 
@@ -234,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // DB에서 견적번호 받아오기
   async function fetchEstimateNumber() {
     const res = await fetch('/estimate/app/controllers/get_new_estimate_number.php');
     const data = await res.json();

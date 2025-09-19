@@ -11,7 +11,7 @@ $appId = intval($_GET['id']);
 
 try {
     $stmt = $pdo->prepare("
-        SELECT a.id AS application_id, u.name AS user_name, u.company_name, u.phone, a.status
+        SELECT a.id AS application_id, u.name AS user_name, u.company_name, u.phone, u.email,a.status
         FROM applications a
         JOIN users u ON a.user_id = u.id
         WHERE a.id = :id
