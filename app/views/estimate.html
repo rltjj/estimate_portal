@@ -20,6 +20,9 @@
     });
   </script>
 
+  <input type="hidden" id="currentUserId" value="">
+  <input type="hidden" id="currentApplicationId" value="<?= $_GET['estimateId'] ?? '' ?>">
+
   <div class="container">
     <div class="card">
       <h1>서비스 체크리스트 (관리자)</h1>
@@ -55,7 +58,7 @@
       </div>
 
       <div class="preview-actions">
-        <button class="ghost" id="sendEmailBtn" disabled>이메일로 발송</button>
+        <button class="ghost" id="sendEmailBtn">이메일로 발송</button>
         <button class="ghost" id="downloadPdfBtn">PDF 다운로드</button>
       </div>
     </div>

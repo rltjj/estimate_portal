@@ -1,58 +1,82 @@
-// email.js
 document.addEventListener('DOMContentLoaded', () => {
   const sendEmailBtn = document.getElementById('sendEmailBtn');
-  if (!sendEmailBtn) return;
+  const previewArea = document.getElementById('previewArea');
 
-  sendEmailBtn.addEventListener('click', async () => {
-    const companyName = document.getElementById('companyName')?.value.trim();
-    const managerName = document.getElementById('managerName')?.value.trim();
-    const managerPhone = document.getElementById('managerPhone')?.value.trim();
-    const previewArea = document.getElementById('previewArea');
+  // URL에서 estimateId 가져오기
+  const urlParams = new URLSearchParams(window.location.search);
+  const applicationId = urlParams.get('estimateId'); // ?estimateId=3
 
-    if (!companyName || !managerName || !managerPhone) {
-      alert('회사명, 담당자, 연락처를 모두 입력해주세요.');
-      return;
-    }
+  if (!applicationId) {
+    alert('applicationId가 없습니다. URL을 확인해주세요.');
+    return;
+  }
 
-    if (!previewArea || !previewArea.innerHTML.trim()) {
-      alert('견적서 내용이 없습니다.');
-      return;
-    }
+  // applicationId로 사용자 정보 가져오기
+  fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log('fetch 결과:', data);
 
-    try {
-      // 미리보기 영역을 PDF Blob으로 변환
-      const opt = {
-        margin: 10,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      const pdfBlob = await html2pdf().set(opt).from(previewArea).outputPdf('blob');
-
-      // 서버로 전송
-      const formData = new FormData();
-      formData.append('companyName', companyName);
-      formData.append('managerName', managerName);
-      formData.append('managerPhone', managerPhone);
-      formData.append('pdf', pdfBlob, `${companyName}_견적서.pdf`);
-
-      const res = await fetch('/estimate/public/api/send_email.php', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!res.ok) throw new Error('서버 오류');
-      const result = await res.json();
-
-      if (result.success) {
-        alert('이메일 발송 완료!');
-      } else {
-        alert('이메일 발송 실패: ' + result.message);
+      if (!data.application || !data.application.user_id) {
+        alert('사용자 정보가 없습니다. 해당 견적서를 확인할 수 없습니다.');
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      alert('이메일 발송 중 오류가 발생했습니다.');
-    }
-  });
+
+      const userId = data.application.user_id;
+      const companyNameDefault = data.application.company_name || '견적서';
+      const managerNameDefault = data.application.user_name || '';
+      const managerPhoneDefault = data.application.phone || '';
+
+      // 버튼 클릭 이벤트 연결
+      sendEmailBtn?.addEventListener('click', async () => {
+        const companyName = document.getElementById('companyName')?.value.trim() || companyNameDefault;
+        const managerName = document.getElementById('managerName')?.value.trim() || managerNameDefault;
+        const managerPhone = document.getElementById('managerPhone')?.value.trim() || managerPhoneDefault;
+
+        if (!previewArea || !previewArea.innerHTML.trim()) {
+          alert('견적서 내용이 없습니다.');
+          return;
+        }
+
+        try {
+          const pdfBlob = await html2pdf()
+            .set({
+              margin: 10,
+              image: { type: 'jpeg', quality: 0.95 },
+              html2canvas: { scale: 2, useCORS: true },
+              jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(previewArea)
+            .outputPdf('blob');
+
+          const formData = new FormData();
+          formData.append('user_id', userId);
+          formData.append('application_id', applicationId);
+          formData.append('companyName', companyName);
+          formData.append('managerName', managerName);
+          formData.append('managerPhone', managerPhone);
+          formData.append('pdf', pdfBlob, `${companyName}.pdf`);
+
+          const res = await fetch('/estimate/app/controllers/send_estimate_email.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await res.json();
+
+          if (result.success) {
+            alert(`이메일 발송 완료!\n파일명: ${result.filename}\n견적번호: ${result.estimate_no}`);
+          } else {
+            alert('이메일 발송 실패: ' + (result.error || '알 수 없는 오류'));
+          }
+        } catch (err) {
+          console.error(err);
+          alert('이메일 발송 중 오류가 발생했습니다: ' + err.message);
+        }
+      });
+    })
+    .catch(err => {
+      console.error('사용자 정보 fetch 실패:', err);
+      alert('사용자 정보를 가져오지 못했습니다. 콘솔을 확인하세요.');
+    });
 });
