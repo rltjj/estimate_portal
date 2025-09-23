@@ -17,17 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const applicationId = urlParams.get('estimateId');
 
+  // 모두 체크/해제
   checkAllBtn.addEventListener('click', () => {
     const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
     const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-
     checkboxes.forEach(cb => {
-      if (!cb.disabled) { // 필수 항목 제외
+      if (!cb.disabled) {
         cb.checked = !allChecked;
         cb.dispatchEvent(new Event('change'));
       }
     });
-
     checkAllBtn.textContent = allChecked ? '모두 체크' : '모두 해제';
   });
 
@@ -56,16 +55,40 @@ document.addEventListener('DOMContentLoaded', () => {
             managerInput.value = application.user_name || '';
             phoneInput.value = application.phone || '';
 
+            // DB 선택 항목 반영
             selectedProducts.forEach(sel => {
-              const item = state.items.find(i => i.id === String(sel.product_id));
-              if (item) state.selections[item.id] = { qty: sel.quantity, price: sel.price };
+              const idStr = String(sel.product_id);
+              state.selections[idStr] = { qty: sel.quantity, price: sel.price };
+            });
+
+            // 필수항목 추가
+            ['18', '19'].forEach(id => {
+              const idStr = String(id);
+              if (!state.selections[idStr]) {
+                const item = state.items.find(i => i.id === idStr);
+                if (item) state.selections[idStr] = { qty: 1, price: item.price };
+              }
             });
 
             renderChecklist();
             renderPricingEditor();
             updateSummary();
+          })
+          .catch(() => {
+            ['18', '19'].forEach(id => {
+              const item = state.items.find(i => i.id === String(id));
+              if (item) state.selections[item.id] = { qty: 1, price: item.price };
+            });
+            renderChecklist();
+            renderPricingEditor();
+            updateSummary();
           });
       } else {
+        // 새 견적: 필수항목만 체크
+        ['18', '19'].forEach(id => {
+          const item = state.items.find(i => i.id === String(id));
+          if (item) state.selections[item.id] = { qty: 1, price: item.price };
+        });
         renderChecklist();
         renderPricingEditor();
         updateSummary();
@@ -75,22 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderChecklist() {
     checklistEl.innerHTML = '';
     state.items.forEach(item => {
-      const isMandatory = item.id === '18' || item.id === '19'; // 필수 체크 항목
+      const idStr = String(item.id);
+      const isMandatory = idStr === '18' || idStr === '19';
+      const selected = Boolean(state.selections[idStr]);
+      const qty = state.selections[idStr]?.qty || 1;
+
       const div = document.createElement('div');
       div.innerHTML = `
         <label style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
           <div>
-            <input type="checkbox" data-id="${item.id}" ${isMandatory ? 'checked disabled' : ''}>
+            <input type="checkbox" data-id="${idStr}" ${selected ? 'checked' : ''} ${isMandatory ? 'disabled' : ''}>
             ${item.label} (${formatWon(item.price)})
           </div>
-          <input type="number" min="1" value="1" data-qty-id="${item.id}" style="width:60px">
+          <input type="number" min="1" value="${qty}" data-qty-id="${idStr}" style="width:60px">
         </label>`;
       checklistEl.appendChild(div);
-
-      // 필수 항목은 selections에 자동 추가
-      if (isMandatory) {
-        state.selections[item.id] = { qty: 1, price: item.price };
-      }
     });
 
     checklistEl.querySelectorAll('input[type="checkbox"]').forEach(cb =>
@@ -171,10 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const company = (companyNameInput.value || '').trim();
-    const manager = (managerInput.value || '').trim();
-    const phone = (phoneInput.value || '').trim();
-
     let rows = '';
     keys.forEach((id, idx) => {
       const s = state.selections[id];
@@ -215,10 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <td style="text-align:right" class="total-row">${formatWon(total)}</td>
           </tr>
         </tbody>
-      </table>
-    `;
+      </table>`;
   }
 
+  // --- PDF 관련 추가 ---
   async function fetchEstimateNumber() {
     const res = await fetch('/estimate/app/controllers/get_new_estimate_number.php');
     const data = await res.json();
@@ -238,12 +256,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let itemRows = '';
       let detailRows = '';
-
       keys.forEach((id, idx) => {
         const s = state.selections[id];
         const item = state.items.find(x => x.id === id);
         const lineTotal = s.qty * s.price;
-
         itemRows += `
           <tr>
             <td>${idx + 1}</td>
@@ -252,16 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <td style="text-align:right">${s.qty}</td>
             <td style="text-align:right">${formatWon(lineTotal)}</td>
           </tr>`;
-
-        detailRows += `
-          <tr>
-            <td>${item.label}</td>
-            <td>${item.description}</td>
-          </tr>`;
+        detailRows += `<tr><td>${item.label}</td><td>${item.description}</td></tr>`;
       });
 
       const today = new Date().toLocaleDateString('ko-KR');
-
       html = html
         .replace('{{NUM}}', estimateNumber)
         .replace('{{COMPANY}}', company || '견적서')
@@ -274,32 +284,37 @@ document.addEventListener('DOMContentLoaded', () => {
         .replace('{{TAX}}', formatWon(state.vat))
         .replace('{{TOTAL}}', formatWon(state.total));
 
-      html2pdf().set({
+      await html2pdf().set({
         margin: [5, 5, 5, 5],
         filename: `${company || '견적서'}_${estimateNumber}.pdf`,
         image: { type: 'jpeg', quality: 0.96 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).from(html).save();
-
     } catch (err) {
       alert(err.message);
     }
   }
 
+  // 초기화 버튼
   resetBtn.addEventListener('click', () => {
     if (confirm('초기화하시겠습니까?')) {
       state.items = JSON.parse(JSON.stringify(ITEMS));
       state.selections = {};
+      ['18', '19'].forEach(id => {
+        const item = state.items.find(i => i.id === String(id));
+        if (item) state.selections[item.id] = { qty: 1, price: item.price };
+      });
       renderChecklist();
       renderPricingEditor();
       updateSummary();
     }
   });
 
+  // PDF 버튼 연결
   downloadPdfBtn.addEventListener('click', generatePdf);
 
-  [companyNameInput, managerInput, phoneInput].forEach(input => {
-    input.addEventListener('input', updateSummary);
-  });
+  [companyNameInput, managerInput, phoneInput].forEach(input =>
+    input.addEventListener('input', updateSummary)
+  );
 });
