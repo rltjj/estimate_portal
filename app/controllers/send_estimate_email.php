@@ -17,13 +17,11 @@ try {
     $applicationId = intval($_POST['application_id']);
     $companyName = $_POST['companyName'] ?? '견적서';
 
-    // 사용자 조회
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$user) throw new Exception('해당 유저 없음');
 
-    // --- 견적번호 생성 (PDF 다운로드 방식과 동일) ---
     $today = date('ymd');
     $time  = date('Hi');
 
@@ -37,11 +35,10 @@ try {
     $stmtInsert = $pdo->prepare("INSERT INTO estimates (estimate_number) VALUES (?)");
     $stmtInsert->execute([$estimateNo]);
 
-    // PDF 파일 이름
+    //파일 이름
     $fileKey = 'pdf';
     $filename = mb_encode_mimeheader($companyName . '_' . $estimateNo . '.pdf', 'UTF-8', 'B');
 
-    // --- 메일 발송 ---
     $mail = new PHPMailer(true);
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();
@@ -73,7 +70,6 @@ try {
     $mail->addAttachment($_FILES[$fileKey]['tmp_name'], $filename);
     $mail->send();
 
-    // applications 상태 업데이트
     $stmt3 = $pdo->prepare("UPDATE applications SET status = 'QUOTED' WHERE id = ?");
     $stmt3->execute([$applicationId]);
 

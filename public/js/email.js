@@ -4,18 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentUserIdInput = document.getElementById('currentUserId');
   const currentApplicationIdInput = document.getElementById('currentApplicationId');
 
-  // URL에서 estimateId 가져오기
   const urlParams = new URLSearchParams(window.location.search);
-  const applicationId = urlParams.get('estimateId'); // ?estimateId=3
+  const applicationId = urlParams.get('estimateId'); 
 
   if (!applicationId) {
     alert('applicationId가 없습니다. URL을 확인해주세요.');
     return;
   }
 
-  currentApplicationIdInput.value = applicationId; // ★ applicationId input에 넣기
+  currentApplicationIdInput.value = applicationId; 
 
-  // applicationId로 사용자 정보 가져오기
   fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
     .then(res => res.json())
     .then(data => {
@@ -27,13 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const userId = data.application.user_id;
-      currentUserIdInput.value = userId; // ★ userId input에 넣기
+      currentUserIdInput.value = userId; 
 
       const companyNameDefault = data.application.company_name || '견적서';
       const managerNameDefault = data.application.user_name || '';
       const managerPhoneDefault = data.application.phone || '';
 
-      // 버튼 클릭 이벤트 연결
       sendEmailBtn?.addEventListener('click', async () => {
         const companyName = document.getElementById('companyName')?.value.trim() || companyNameDefault;
         const managerName = document.getElementById('managerName')?.value.trim() || managerNameDefault;
@@ -73,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
           alert(`이메일 발송 완료!\n파일명: ${result.filename}\n견적번호: ${result.estimate_no}`);
 
-          // 브라우저에서도 PDF 다운로드
           const a = document.createElement('a');
           a.href = URL.createObjectURL(pdfBlob);
           a.download = `${companyName}_${result.estimate_no}.pdf`;
