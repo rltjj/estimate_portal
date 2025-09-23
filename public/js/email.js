@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sendEmailBtn = document.getElementById('sendEmailBtn');
   const previewArea = document.getElementById('previewArea');
+  const currentUserIdInput = document.getElementById('currentUserId');
+  const currentApplicationIdInput = document.getElementById('currentApplicationId');
 
   // URL에서 estimateId 가져오기
   const urlParams = new URLSearchParams(window.location.search);
@@ -10,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('applicationId가 없습니다. URL을 확인해주세요.');
     return;
   }
+
+  currentApplicationIdInput.value = applicationId; // ★ applicationId input에 넣기
 
   // applicationId로 사용자 정보 가져오기
   fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
@@ -23,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const userId = data.application.user_id;
+      currentUserIdInput.value = userId; // ★ userId input에 넣기
+
       const companyNameDefault = data.application.company_name || '견적서';
       const managerNameDefault = data.application.user_name || '';
       const managerPhoneDefault = data.application.phone || '';
@@ -63,12 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
           });
 
           const result = await res.json();
+          if (!result.success) throw new Error(result.error || '알 수 없는 오류');
 
-          if (result.success) {
-            alert(`이메일 발송 완료!\n파일명: ${result.filename}\n견적번호: ${result.estimate_no}`);
-          } else {
-            alert('이메일 발송 실패: ' + (result.error || '알 수 없는 오류'));
-          }
+          alert(`이메일 발송 완료!\n파일명: ${result.filename}\n견적번호: ${result.estimate_no}`);
+
+          // 브라우저에서도 PDF 다운로드
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(pdfBlob);
+          a.download = `${companyName}_${result.estimate_no}.pdf`;
+          a.click();
+          URL.revokeObjectURL(a.href);
+
         } catch (err) {
           console.error(err);
           alert('이메일 발송 중 오류가 발생했습니다: ' + err.message);
