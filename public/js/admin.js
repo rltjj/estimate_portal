@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
             managerInput.value = application.user_name || '';
             phoneInput.value = application.phone || '';
 
-            // DB 선택 항목 반영
             selectedProducts.forEach(sel => {
               const idStr = String(sel.product_id);
               state.selections[idStr] = { qty: sel.quantity, price: sel.price };

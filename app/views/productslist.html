@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>관리자 - 상품 정보</title>
+    <link rel="stylesheet"
+        href="/estimate/public/css/style.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/style.css')?>">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 90%;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="buttons">
+        <button id="return">신청 내역으로 돌아가기</button>
+    </div>
+
+    <script>
+        document.getElementById('return').addEventListener('click', () => {
+            window.location.href = '/estimate/app/views/admin.html';
+        });
+    </script>
+    <h2>상품 관리</h2>
+    <form method="POST" action="/estimate/app/controllers/admin_products.php">
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>상품명</th>
+                    <th>가격</th>
+                    <th>설명</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <table>
+            <tr>
+                <td>신규</td>
+                <td><input type="text" name="new_name"></td>
+                <td><input type="number" name="new_price"></td>
+                <td><textarea name="new_description"></textarea></td>
+                <td>-</td>
+            </tr>
+        </table>
+
+        <button type="submit" name="save" class="btn">저장</button>
+    </form>
+
+    <script>
+        fetch('/estimate/app/controllers/get_products.php')
+            .then(res => res.json())
+            .then(products => {
+                const tbody = document.querySelector('#productsTable tbody');
+                tbody.innerHTML = '';
+
+                products.forEach(p => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+            <td>
+              ${p.id}
+              <input type="hidden" name="id[]" value="${p.id}">
+            </td>
+            <td><input type="text" name="name[]" value="${p.name}"></td>
+            <td><input type="number" name="price[]" value="${p.price}"></td>
+            <td><textarea name="description[]">${p.description ?? ''}</textarea></td>
+            <td><a href="/estimate/app/controllers/admin_products.php?delete=${p.id}" class="btn" onclick="return confirm('삭제하시겠습니까?')">삭제</a></td>
+          `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(err => console.error('상품 불러오기 실패:', err));
+    </script>
+</body>
+
+</html>

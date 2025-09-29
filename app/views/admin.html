@@ -12,10 +12,15 @@
 <body>
   <div class="buttons">
     <button id="go">견적서 생성하기</button>
+    <button id="edit">상품 정보 수정하기</button>
   </div>
   <script>
     document.getElementById('go').addEventListener('click', () => {
       window.location.href = '/estimate/app/views/estimate.html';
+    });
+
+    document.getElementById('edit').addEventListener('click', () => {
+      window.location.href = '/estimate/app/views/productslist.html';
     });
   </script>
 
