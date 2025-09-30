@@ -47,15 +47,15 @@ try {
     $provider = strtolower($user['provider']);
     if ($provider === 'google') {
         $mail->Host       = 'smtp.gmail.com';
-        $mail->Username   = 'globalsungjin@gmail.com';
-        $mail->Password   = 'dtos xcds fuyo euhj';
+        $mail->Username   = $_ENV['GMAIL_USERNAME'];
+        $mail->Password   = $_ENV['GMAIL_PASSWORD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->setFrom('globalsungjin@gmail.com', '견적서 시스템');
     } elseif ($provider === 'naver') {
         $mail->Host       = 'smtp.naver.com';
-        $mail->Username   = '네이버메일계정';
-        $mail->Password   = '네이버앱비밀번호';
+        $mail->Username   = $_ENV['NAVER_USERNAME'];
+        $mail->Password   = $_ENV['NAVER_PASSWORD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->setFrom('네이버메일계정', '견적서 시스템');

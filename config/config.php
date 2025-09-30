@@ -1,11 +1,18 @@
 <?php
 session_start();
 
-$host = 'localhost';
-$db   = 'estimate';
-$user = 'root';
-$pass = ''; 
-$charset = 'utf8mb4';
+require __DIR__ . '/../vendor/autoload.php'; 
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../'); 
+$dotenv->load();
+
+$host = $_ENV['DB_HOST'];
+$db   = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$pass = $_ENV['DB_PASS'];
+$charset = $_ENV['DB_CHARSET'];
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -20,11 +27,11 @@ try {
 }
 
 // 구글 OAuth 설정
-define('GOOGLE_CLIENT_ID', '1005285406572-l23vogs0dgjq1hc9ffst388su6t3304a.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', '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');
-define('GOOGLE_REDIRECT_URI', 'http://localhost/estimate/public/callback.php');
+define('GOOGLE_CLIENT_ID', $_ENV['GOOGLE_CLIENT_ID']);
+define('GOOGLE_CLIENT_SECRET', $_ENV['GOOGLE_CLIENT_SECRET']);
+define('GOOGLE_REDIRECT_URI', $_ENV['GOOGLE_REDIRECT_URI']);
 
-// 네이버 OAuth 설정
-define('NAVER_CLIENT_ID', 'd9YL970vJItrZKDjtVDY');
-define('NAVER_CLIENT_SECRET', 'U5S3fScQPw');
-define('NAVER_REDIRECT_URI', 'http://localhost/estimate/public/callback_naver.php');
+// 네이버 OAuth
+define('NAVER_CLIENT_ID', $_ENV['NAVER_CLIENT_ID']);
+define('NAVER_CLIENT_SECRET', $_ENV['NAVER_CLIENT_SECRET']);
+define('NAVER_REDIRECT_URI', $_ENV['NAVER_REDIRECT_URI']);
