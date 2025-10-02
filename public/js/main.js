@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 모달 요소
   const modal = document.getElementById("contactModal");
   const contactBtn = document.querySelector('a[href="#contact"]');
   const closeBtn = document.getElementById("closeModalBtn");
 
-  // 모달 열기
+  if (modal) modal.style.display = "block";
+
   if (contactBtn && modal) {
     contactBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -12,14 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 모달 닫기
   if (closeBtn && modal) {
     closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
     });
   }
 
-  // 개인정보 동의 펼치기
   const openConsent = document.getElementById("openConsent");
   const consentText = document.getElementById("consentText");
   if (openConsent && consentText) {
@@ -29,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // SMS 폼 전송
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
@@ -48,10 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const result = await res.json();
-        alert(result.message); // 성공 메시지
+        alert(result.message); 
 
-        contactForm.reset(); // 폼 초기화
-        modal.style.display = "none"; // 모달 닫기
+        contactForm.reset(); 
+        modal.style.display = "none";
 
       } catch (err) {
         alert("문자 전송 중 오류 발생");

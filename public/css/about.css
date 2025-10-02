@@ -1,0 +1,236 @@
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'KoPubWorldDotum', sans-serif;
+}
+
+header {
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid #185aa5;
+    padding: 0.6rem 0;
+}
+
+header nav.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: #185aa5;
+    font-family: 'KoPubWorldDotum', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#log {
+    height: 50px;
+    display: block;
+}
+
+.navlinks {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    margin-left: auto;
+    position: static;
+    height: auto;
+    background: none;
+}
+
+.navlinks.show {
+    display: flex;
+}
+
+.navlinks a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'KoPubWorldDotum', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.navlinks a:hover {
+    color: #185aa5;
+}
+
+.hamburger {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #185aa5;
+    z-index: 210;
+    margin-left: auto;
+}
+
+@media (min-width: 769px) {
+    .navlinks {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        height: auto;
+        background: none;
+        gap: 3rem;
+        margin-left: auto;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .navlinks a {
+        font-size: 20px;
+        color: #fff;
+        border: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .navlinks {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        z-index: 200;
+        gap: 2rem;
+    }
+
+    .navlinks.show {
+        display: flex;
+    }
+
+    .navlinks a {
+        color: #000;
+    }
+
+    .hamburger {
+        display: block !important;
+    }
+}
+
+#int {
+    width: 100%;
+    height: 80vh;
+    max-width: none;
+    margin: 0;
+    padding-top: 20px;
+    box-sizing: border-box;
+    background-image: url('/estimate/public/images/int01.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+#int>#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#int p {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+#int h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    #int h1 {
+        font-size: 2rem;
+    }
+}
+
+main {
+    background-color: white;
+    padding: 100px 20px;
+}
+
+#end {
+    height: 30vh;
+    background-image: url('/estimate/public/images/int02.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 50px;
+}
+
+#end .content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    color: #185aa5;
+    text-align: center;
+    font-family: 'KoPubWorldDotum', sans-serif;
+    font-weight: 700;
+    border-top: 1px solid #185aa5;
+}
+
+footer span {
+    font-size: 12px;
+}

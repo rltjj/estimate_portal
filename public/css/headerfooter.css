@@ -26,16 +26,16 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: var(--bg);
   z-index: 100;
   border-bottom: 1px solid #185aa5;
+  padding: 0.6rem 0;
+  background-color: #fff;
 }
 
 header nav.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 3%;
   max-width: 1200px;
   margin: 0 auto;
 }
