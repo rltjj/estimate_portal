@@ -1,25 +1,256 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/estimate/public/css/index.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/index.css')?>">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>기업경영지원센터</title>
+  <link rel="stylesheet" href="/estimate/public/css/main.css">
+  <link rel="stylesheet" href="/estimate/public/css/popup.css">
+  <link rel="stylesheet" href="/estimate/public/css/headerfooter.css">
 </head>
+
 <body>
-  <div class="login-container">
-    <h1>견적서 플랫폼 로그인</h1>
-    <p>간편 로그인 또는 이메일로 로그인하세요.</p>
+  <div id="header"></div>
+  <br><br>
 
-    <div class="login-buttons">
-      <a href="/estimate/app/controllers/login.php"><button id="googleLogin" class="login-btn google">Google 계정으로 로그인</button></a>
-      <a href="/estimate/app/controllers/naver_login.php"><button id="naverLogin" class="login-btn naver">Naver 계정으로 로그인</button></a>
-    </div>
+  <!-- 상담 모달 -->
+  <div id="contactModal" class="popup">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="status-dot"></span>
+        <h2>빠른상담신청</h2>
+        <span id="closeModalBtn" class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="contactForm">
+          <label for="message">메시지</label>
+          <textarea id="message" name="message" rows="4" placeholder="궁금하신 점을 문자로 남겨주시면 연락 드리겠습니다." required></textarea>
 
-    <div class="email-login">
-      <input type="email" id="email" placeholder="이메일 입력">
-      <button id="emailLogin" class="login-btn email">로그인</button>
+          <label for="phone">연락처</label>
+          <input type="text" id="phone" name="phone" required>
+
+          <div class="consent">
+            <input type="checkbox" id="agree" name="agree" required>
+            <label for="agree">
+              <a href="#" id="openConsent">개인정보 수집 및 이용</a>에 동의합니다.
+            </label>
+          </div>
+
+          <div id="consentText" style="display:none;">
+            <p><strong>1. 수집 항목:</strong> 이름, 연락처, 메시지</p>
+            <p><strong>2. 수집 목적:</strong> 문의사항에 대한 답변 및 상담 진행</p>
+            <p><strong>3. 보관 기간:</strong> 관련 법령에 따라 3년간 보관 후 파기</p>
+            <p><strong>4. 동의 거부권:</strong> 동의를 거부할 수 있으나, 이 경우 서비스 이용이 제한될 수 있습니다.</p>
+          </div>
+        </form>
+
+        <script>
+          document.getElementById("contactForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = {
+              message: document.getElementById("message").value,
+              phone: document.getElementById("phone").value
+            };
+
+            const res = await fetch("/estimate/app/controllers/send-sms.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData)
+            });
+
+            const result = await res.json();
+            document.getElementById("result").innerText = result.message;
+          });
+        </script>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="contactForm">보내기</button>
+      </div>
     </div>
   </div>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <span class="pill">빠른상담·전국대행</span>
+        <h1>정부정책자금/법인지원/<br>기업인증/ISO를<br>한 번에 해결하는 <span class="accent">원스톱 컨설팅</span></h1>
+        <p>소상공인부터 중견까지, 맞춤형 심사전략과 준비서류 설계로 승인확률을 높입니다.<br>평균 7일 이내 1차 검토, 서류 템플릿 즉시 제공.</p>
+        <div class="hero-buttons">
+          <a class="btn" href="#contact">빠른 상담 요청</a>
+          <a class="btn" href="#services-main">서비스 한눈에</a>
+        </div>
+        <div class="kpi">
+          <div class="card">
+            <div class="val">97%</div>
+            <div class="small">재방문의사/만족도</div>
+          </div>
+          <div class="card">
+            <div class="val">7일</div>
+            <div class="small">평균 1차 검토</div>
+          </div>
+          <div class="card">
+            <div class="val">24시간</div>
+            <div class="small">상담 접수 응답</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-wrapper">
+        <div class="card contact-card">
+          <strong>운전자금</strong>
+          <div class="ex">원자재의 구매, 생산판매 활동등 기업의 운영에 소요되는 운전자금을 기업의 금융비용 절감을 위해 정부에서 저금리로 지원하는 정부 정책자금입니다.</div>
+          <strong>시설자금</strong>
+          <div class="ex">공장 건물, 사무소, 점포 등 영업 활동의 기초가 되는 고정시설에 투자되는 자금을 의미하며, 시설물 매입이나 공사 착공을 위한 자금입니다. 기계매입전 또는 공사전
+            시설자금을 대출을 신청진행할 수 있습니다.</div>
+          <strong>특허대출</strong>
+          <div class="ex">기업이 보유한 지적 재산권을 가치평가를 하여 이를 담보로자금을 조달할 수 있도록 평가비용을 지원하는데 성장성과 기술력을 통한 특허 자금 조달 방식입니다.</div>
+          <strong>그외</strong>
+          <div class="ex">중소기업진흥공단, 소상공인진흥공단, 기술보증기금, 신용보증기금, 신용보증재단, 한국무역보험공사, 부산경제진흥원등의 대출 상품에 따라 자금신청이 가능합니다.</div>
+        </div>
+        <a class="contact-btn" href="http://pf.kakao.com/_mASDn">
+          <img src="/estimate/public/images/speech.png" alt="카톡채널">문의하기
+        </a>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services-main" class="section">
+      <h2>핵심 서비스</h2>
+      <div class="grid cols-4">
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>정부정책자금</strong>
+            <div class="small">소상공인/소기업/중기업 운전자금·시설자금·창업자금</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>법인지원</strong>
+            <div class="small">재무/세무, 가지급금, 노무/법무, 법인전환</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>기업인증</strong>
+            <div class="small">연구소인증, 벤처, 이노비즈, 메인비즈, 그린비즈</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>ISO(시스템인증)</strong>
+            <div class="small">ISO9001/14001/TL9000/<br>TS16949/13485/22000</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <br>
+
+    <section id="services-policy" class="section">
+      <h2>정책자금 바로가기</h2>
+      <div class="grid cols-3">
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>소상공인 정책자금</strong>
+            <div class="small">운전자금 · 대환 · 만기연장</div>
+          </div>
+          <button class="consult-btn" data-link="/#">
+            <a href="http://pf.kakao.com/_mASDn">상담</a>
+          </button>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>중소벤처기업진흥공단</strong>
+            <div class="small">스마트공장·사업전환</div>
+          </div>
+          <button class="consult-btn">
+            <a href="http://pf.kakao.com/_mASDn">상담</a>
+          </button>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>신용보증·기술보증</strong>
+            <div class="small">신보 · 기보 보증서 연계</div>
+          </div>
+          <button class="consult-btn">
+            <a href="http://pf.kakao.com/_mASDn">상담</a>
+          </button>
+        </div>
+    </section>
+
+    <br>
+
+    <section id="services-cert" class="section">
+      <h2>기업인증 패키지</h2>
+      <div class="grid cols-3">
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>기업부설연구</strong>
+            <div class="small">R&D 인력·공간 설계부터 신고까지</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>벤처/이노비즈/메인비즈</strong>
+            <div class="small">평가 지표진단, 보완 전략 수립</div>
+          </div>
+        </div>
+    </section>
+
+    <br>
+
+    <section id="services-iso" class="section">
+      <h2>ISO(시스템인증)</h2>
+      <div class="grid cols-4">
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>ISO 9001</strong>
+            <div class="small">품질경영시스템</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>ISO 14001</strong>
+            <div class="small">환경경영시스템</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <br>
+
+    <section id="services-intro" class="section">
+      <h2>대표전화 : 010.8488.1588</h2>
+      <div class="grid cols-3">
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>상담시간</strong>
+            <div class="small">평일 09:30 ~ 18:00</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>주소</strong>
+            <div class="small">부산광역시 남구 신선로 410<br>동명대학교 국제산학협력관 210호</div>
+          </div>
+        </div>
+        <div class="card service" data-link="/#">
+          <div>
+            <strong>이메일</strong>
+            <div class="small">sungjin_g@naver.com</div>
+          </div>
+        </div>
+    </section>
+
+    <br><br>
+  </main>
+
+  <div id="footer"></div>
+  <script src="/estimate/public/js/main.js"></script>
 </body>
+
 </html>

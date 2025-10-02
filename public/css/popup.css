@@ -1,0 +1,131 @@
+:root {
+  --hf: #353e49;
+  --round: #4CAF50;
+}
+
+.popup {
+  position: fixed;
+  top: 6rem;
+  right: 4rem;
+  width: 280px;
+  max-width: 90%;
+  background: #fff;
+  border-radius: 20px;
+  border: 3px solid var(--hf);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  font-family: 'KoPubWorldDotum', sans-serif;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--hf);
+  color: #fff;
+  position: relative;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--round);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.modal-header h2 {
+  flex-grow: 1;
+  font-size: 16px;
+  margin: 0;
+  text-align: left;
+}
+
+.modal-header .close {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-body label {
+  font-weight: 300;
+  font-size: 13px;
+}
+
+.modal-body textarea,
+.modal-body input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'KoPubWorldDotum', sans-serif;
+  resize: none;
+}
+
+.modal-body .consent {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.modal-body .consent input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  margin: 0 6px 0 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.modal-body .consent label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+
+.modal-body .consent label a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.modal-footer {
+  padding: 4px 16px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--hf);
+}
+
+.modal-footer button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--hf);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.modal-footer button:hover {
+  background-color: var(--hf);
+}
+
+#consentText {
+  display: none;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #000000;
+  background-color: #eee;
+}
