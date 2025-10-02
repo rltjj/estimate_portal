@@ -1,0 +1,56 @@
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --google: #db4437;
+  --naver: #03c75a;
+  --btn: #185aa5;
+}
+
+body {
+  margin: 0;
+  font-family: 'KoPubWorldDotum', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.login-container {
+  padding: 40px 30px;
+  text-align: center;
+  width: 320px;
+}
+
+.login-container h1 {
+  margin-bottom: 16px;
+  font-size: 32px;
+}
+
+.login-container p {
+  margin-bottom: 24px;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.login-btn {
+  padding: 10px;
+  width: 140px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  width: 100%;
+}
+
+.login-btn.google { background-color: var(--google) }
+.login-btn.naver { background-color: var(--naver)}

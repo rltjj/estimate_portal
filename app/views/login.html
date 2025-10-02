@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/estimate/public/css/index.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/index.css')?>">
+  <link rel="stylesheet" href="/estimate/public/css/login.css">
+  <link rel="stylesheet" href="/estimate/public/css/headerfooter.css">
 </head>
+
 <body>
-  <div class="login-container">
-    <h1>견적서 플랫폼 로그인</h1>
-    <p>간편 로그인 또는 이메일로 로그인하세요.</p>
+  <div id="header"></div>
+  <br><br>
+  <main>
+    <div class="login-container">
+      <h1>견적서 플랫폼 로그인</h1>
+      <p>간편 로그인 또는 이메일로 로그인하세요.</p>
 
-    <div class="login-buttons">
-      <a href="/estimate/app/controllers/login.php"><button id="googleLogin" class="login-btn google">Google 계정으로 로그인</button></a>
-      <a href="/estimate/app/controllers/naver_login.php"><button id="naverLogin" class="login-btn naver">Naver 계정으로 로그인</button></a>
+      <div class="login-buttons">
+        <a href="/estimate/app/controllers/login.php"><button id="googleLogin" class="login-btn google">Google
+            계정으로<br>로그인</button></a>
+        <a href="/estimate/app/controllers/naver_login.php"><button id="naverLogin" class="login-btn naver">Naver
+            계정으로<br>로그인</button></a>
+      </div>
     </div>
+  </main>
 
-    <div class="email-login">
-      <input type="email" id="email" placeholder="이메일 입력">
-      <button id="emailLogin" class="login-btn email">로그인</button>
-    </div>
-  </div>
+  <div id="footer"></div>
+  <script src="/estimate/public/js/hf.js"></script>
 </body>
+
 </html>

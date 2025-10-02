@@ -5,16 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>기업경영지원센터</title>
-  <link rel="stylesheet" href="/estimate/public/css/main.css">
-  <link rel="stylesheet" href="/estimate/public/css/popup.css">
-  <link rel="stylesheet" href="/estimate/public/css/headerfooter.css">
+  <link rel="stylesheet" href="/estimate/public/css/main.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/main.css')?>">
+  <link rel="stylesheet" href="/estimate/public/css/popup.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/popup.css')?>">
+  <link rel="stylesheet" href="/estimate/public/css/headerfooter.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/headerfooter.css')?>">
 </head>
 
 <body>
   <div id="header"></div>
   <br><br>
 
-  <!-- 상담 모달 -->
   <div id="contactModal" class="popup">
     <div class="modal-content">
       <div class="modal-header">
@@ -73,7 +72,6 @@
   </div>
 
   <main class="container">
-    <!-- Hero -->
     <section class="hero">
       <div>
         <span class="pill">빠른상담·전국대행</span>
@@ -117,7 +115,6 @@
       </div>
     </section>
 
-    <!-- Services -->
     <section id="services-main" class="section">
       <h2>핵심 서비스</h2>
       <div class="grid cols-4">
@@ -250,6 +247,7 @@
   </main>
 
   <div id="footer"></div>
+  <script src="/estimate/public/js/hf.js"></script>
   <script src="/estimate/public/js/main.js"></script>
 </body>
 

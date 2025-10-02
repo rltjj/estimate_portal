@@ -1,62 +1,62 @@
-async function loadHTML(id, file) {
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(`Failed to fetch ${file}`);
-    document.getElementById(id).innerHTML = await res.text();
-
-    if (id === "header") initHamburger();
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  loadHTML("header", "/estimate/app/views/header.html");
-  loadHTML("footer", "/estimate/app/views/footer.html");
-
-  // 모달
+  // 모달 요소
   const modal = document.getElementById("contactModal");
   const contactBtn = document.querySelector('a[href="#contact"]');
   const closeBtn = document.getElementById("closeModalBtn");
 
-  if (modal) modal.style.display = "block";
+  // 모달 열기
   if (contactBtn && modal) {
     contactBtn.addEventListener("click", (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
       modal.style.display = "block";
     });
   }
-  if (closeBtn) closeBtn.onclick = () => { modal.style.display = "none"; };
 
-  // 개인정보 수집 펼치기
+  // 모달 닫기
+  if (closeBtn && modal) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  // 개인정보 동의 펼치기
   const openConsent = document.getElementById("openConsent");
   const consentText = document.getElementById("consentText");
-  if (openConsent) {
-    openConsent.addEventListener("click", e => {
+  if (openConsent && consentText) {
+    openConsent.addEventListener("click", (e) => {
       e.preventDefault();
       consentText.style.display = consentText.style.display === "none" ? "block" : "none";
     });
   }
 
-  // 카드 클릭 이동
-  function bindCardLinks() {
-    const serviceCards = document.querySelectorAll(".card.service");
-    serviceCards.forEach(card => {
-      const link = card.dataset.link;
-      if (link) {
-        card.addEventListener("click", () => {
-          window.location.href = link;
+  // SMS 폼 전송
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        message: document.getElementById("message").value,
+        phone: document.getElementById("phone").value
+      };
+
+      try {
+        const res = await fetch("/estimate/app/controllers/send-sms.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
         });
+
+        const result = await res.json();
+        alert(result.message); // 성공 메시지
+
+        contactForm.reset(); // 폼 초기화
+        modal.style.display = "none"; // 모달 닫기
+
+      } catch (err) {
+        alert("문자 전송 중 오류 발생");
+        console.error(err);
       }
     });
   }
-  bindCardLinks();
-
 });
-
-function initHamburger() {
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const navLinks = document.getElementById("navLinks");
-  if (!hamburgerBtn || !navLinks) return;
-  hamburgerBtn.addEventListener("click", () => navLinks.classList.toggle("show"));
-}
