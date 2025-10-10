@@ -103,7 +103,7 @@ button#submitEstimate {
 }
 
 button#submitEstimate:hover {
-  background-color: #185aa5;
+  background-color: #68b1ff;
 }
 
 @media screen and (max-width: 768px) {
