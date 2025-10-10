@@ -1,52 +1,138 @@
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: #f4f7fb;
+  font-family: 'KoPubWorldDotum', 'Noto Sans KR', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px 20%;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+}
+
+.buttons button {
+  background-color: #185aa5;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.buttons button:hover {
+  background-color: #005fd1;
 }
 
 .container {
-  max-width: 700px;
-  margin: 40px auto;
+  margin: 40px 0;
   background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(12,20,40,0.06);
 }
 
-h1, h2, h3 {
-  color: #0f6cff;
+.container h1 {
+  margin-bottom: 25px;
+  font-size: 22px;
+  color: #222;
+  border-left: 5px solid #0078ff;
+  padding-left: 10px;
 }
 
-ul#estimateList {
-  list-style: none;
-  padding: 0;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
 }
 
-ul#estimateList li {
-  padding: 10px;
-  background: #eef3ff;
-  margin-bottom: 6px;
-  border-radius: 6px;
-  cursor: pointer;
+thead {
+  background-color: #185aa5;
+  color: white;
 }
 
-ul#estimateList li:hover {
-  background: #d7e3ff;
+th, td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
 }
 
-#detailItems label {
-  display: block;
-  margin-bottom: 6px;
-}
-
-button {
-  background: #0f6cff;
+td button {
+  background-color: #0078ff;
   color: #fff;
   border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 5px;
   cursor: pointer;
-  margin: 8px 0;
-  font-size: 14px;
+  transition: 0.2s;
+}
+
+td button:hover {
+  background-color: #185aa5;
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    text-align: right;
+    padding: 10px;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    color: #555;
+    font-weight: 600;
+    text-align: left;
+  }
 }

@@ -1,86 +1,107 @@
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
 body {
-  background: #f4f7fb;
+  font-family: 'KoPubWorldDotum';
+  background-color: #ffffff;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
 .container {
-  max-width: 600px;
-  margin: 30px auto;
-  background: #fff;
-  padding: 30px 25px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 10px;
 }
 
 h1 {
-  color: #0f6cff;
+  font-size: 1.8rem;
   margin-bottom: 20px;
-  font-size: 22px;
+  color: #333;
 }
 
-button {
-  background: #0f6cff;
+.buttons {
+  margin-bottom: 30px;
+}
+
+button#createEstimate {
+  background-color: #185aa5;
   color: #fff;
   border: none;
-  padding: 12px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 15px;
-  margin: 8px 0;
-  width: 100%;
-}
-
-button:hover {
-  background: #0c5ad9;
-}
-
-ul#estimateList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-ul#estimateList li {
-  padding: 10px 14px;
-  background: #eef3ff;
+  padding: 12px 25px;
+  font-size: 1rem;
   border-radius: 8px;
-  margin-bottom: 8px;
-  text-align: left;
-  font-size: 14px;
-}
-
-#checklist {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-}
-
-#checklist label {
-  padding: 8px 12px;
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+}
+
+button#createEstimate:hover {
+  background-color: #68b1ff;
+}
+
+#estimateTable {
   width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
 }
 
-#checklist label:hover {
-  background-color: #e9ecef;
+#estimateTable th,
+#estimateTable td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
 }
 
-#checklist input[type="checkbox"] {
-  margin-right: 10px;
+#estimateTable th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  color: #555;
+}
+
+#estimateTable tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+#estimateTable tr:hover {
+  background-color: #e8f0fe;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 20px;
+  }
+
+  #estimateTable th,
+  #estimateTable td {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  button#createEstimate {
+    width: 100%;
+    padding: 12px;
+  }
 }

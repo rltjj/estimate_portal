@@ -241,18 +241,31 @@ main {
 }
 
 #end {
+    position: relative;
     height: 30vh;
     background-image: url('/estimate/public/images/int02.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    color: white;
     padding: 100px 20%;
+    overflow: hidden;
+}
+
+#end::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); 
+    z-index: 0; 
 }
 
 #end .content {
-    margin: 0 auto;
-    color: #000000;
+    position: relative;
+    z-index: 1;
+    color: #fff;
 }
 
 #footer2 {

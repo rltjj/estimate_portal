@@ -16,10 +16,10 @@ $user_id = $_SESSION['user_id'];
 
 try {
     $stmt = $pdo->prepare("
-        SELECT a.id, a.status, GROUP_CONCAT(p.name SEPARATOR ', ') as products
+        SELECT a.id, a.status, a.created_at, GROUP_CONCAT(p.name SEPARATOR ', ') as products
         FROM applications a
-        JOIN application_products ap ON a.id = ap.application_id
-        JOIN products p ON ap.product_id = p.id
+        LEFT JOIN application_products ap ON a.id = ap.application_id
+        LEFT JOIN products p ON ap.product_id = p.id
         WHERE a.user_id = ?
         GROUP BY a.id
     ");

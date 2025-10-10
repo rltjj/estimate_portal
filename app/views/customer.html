@@ -1,51 +1,112 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/estimate/public/css/customer.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/customer.css')?>">
+  <link rel="stylesheet" href="/estimate/public/css/customer.css">
 </head>
+
 <body>
   <div class="container">
     <h1>환영합니다!</h1>
     <div class="buttons">
       <button id="createEstimate">신청하기</button>
     </div>
+    <p>견적서와 계약서는 로그인하신 이메일로 전송됩니다.</p>
   </div>
 
   <div class="container">
     <h1>신청 내역</h1>
-    <ul id="estimateList"></ul>
+    <table id="estimateTable">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>상품</th>
+          <th>상태</th>
+          <th>신청일</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4">신청 내역이 없습니다.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
 
   <script>
     document.getElementById('createEstimate').addEventListener('click', () => {
       window.location.href = '/estimate/app/views/checklist.html';
     });
 
-    const estimateListEl = document.getElementById('estimateList');
+    const estimateTableBody = document.querySelector('#estimateTable tbody');
 
     fetch('/estimate/app/controllers/get_applications.php')
       .then(res => res.json())
       .then(applications => {
-        if(applications.error){
+        if (applications.error) {
           console.error('서버 에러:', applications.error);
           return;
         }
-        if(applications.length === 0){
-          estimateListEl.innerHTML = '<li>신청 내역이 없습니다.</li>';
+
+        estimateTableBody.innerHTML = '';
+
+        if (applications.length === 0) {
+          estimateTableBody.innerHTML = '<tr><td colspan="4">신청 내역이 없습니다.</td></tr>';
           return;
         }
 
-        applications.forEach(app => {
-          const li = document.createElement('li');
-          li.textContent = `상태: ${app.status}, 상품: ${app.products}`;
-          estimateListEl.appendChild(li);
+        // 상태 매핑 추가
+        const statusMap = {
+          REQUESTED: '신청됨',
+          QUOTED: '견적됨',
+          READY: '결제준비됨',
+          PAID: '결제됨',
+          FAILED: '실패'
+        };
+
+        applications.forEach((app, index) => {
+          const tr = document.createElement('tr');
+          let actionButtons = '';
+
+          if (app.status === 'QUOTED') {
+            actionButtons = `<button class="sign-btn" data-id="${app.id}">전자서명하러가기</button>`;
+          } else if (app.status === 'READY') {
+            actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
+          } else if (app.status === 'PAID') {
+            actionButtons = `<span>결제완료</span>`;
+          }
+
+          tr.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${app.products}</td>
+    <td>${statusMap[app.status] || app.status}</td>
+    <td>${app.created_at || '-'}</td>
+    <td>${actionButtons}</td>
+  `;
+          estimateTableBody.appendChild(tr);
         });
+
+        document.addEventListener('click', e => {
+          if (e.target.classList.contains('sign-btn')) {
+            const appId = e.target.dataset.id;
+            window.location.href = `/estimate/app/controllers/request_signature.php?app_id=${appId}`;
+          }
+
+          if (e.target.classList.contains('pay-btn')) {
+            const appId = e.target.dataset.id;
+            window.location.href = `/estimate/app/controllers/request_payment.php?app_id=${appId}`;
+          }
+        });
+
       })
       .catch(err => console.error('Fetch error:', err));
 
   </script>
 </body>
+
 </html>
