@@ -29,6 +29,13 @@ main {
   font-size: 32px;
 }
 
+@media (max-width: 768px) {
+  .login-container h1 {
+    font-size: 26px;
+  }
+
+}
+
 .login-container p {
   margin-bottom: 24px;
   color: #666;

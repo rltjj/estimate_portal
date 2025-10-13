@@ -1,0 +1,156 @@
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
+        url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'KoPubWorldDotum', sans-serif;
+}
+
+#int {
+    width: 100%;
+    height: 80vh;
+    max-width: none;
+    margin: 0;
+    padding-top: 20px;
+    box-sizing: border-box;
+    background-image: url('/estimate/public/images/iso01.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+#int p {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 0.3rem;
+}
+
+#int h1 {
+    text-align: center;
+    font-size: 4rem;
+    color: #ffffff;
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    #int h1 {
+        font-size: 3rem;
+    }
+}
+
+main {
+    background-color: white;
+    padding: 100px 20%;
+}
+
+.section-title {
+    display: block;
+    font-size: 2.5rem;
+    color: #000000;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.ceo-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #333333;
+    margin-bottom: 40px;
+}
+
+.intro-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.intro-flex p {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.intro-flex img {
+    flex-shrink: 0;
+    border-radius: 10px;
+    width: 40%;
+    height: auto;
+}
+
+#end {
+    position: relative;
+    height: 50vh;
+    background-image: url('/estimate/public/images/iso02.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 4%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#end .content {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  #int h1 {
+    font-size: 2.5rem;
+  }
+
+  main {
+    padding: 60px 20px;
+  }
+
+  .intro-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .intro-flex img {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  #end {
+    padding: 40px 20px;
+  }
+}
