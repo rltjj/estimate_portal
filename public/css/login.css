@@ -1,7 +1,7 @@
 :root {
   --bg: #ffffff;
   --text: #000000;
-  --google: #db4437;
+  --google: #003663;
   --naver: #03c75a;
   --btn: #185aa5;
 }
@@ -21,7 +21,7 @@ main {
 .login-container {
   padding: 40px 30px;
   text-align: center;
-  width: 320px;
+  width: 400px;
 }
 
 .login-container h1 {
@@ -42,18 +42,17 @@ main {
 }
 
 .login-btn {
-  padding: 10px;
-  width: 140px;
+  padding: 12px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 20px;
   color: #fff;
   width: 100%;
 }
 
 .login-btn.google { background-color: var(--google) }
-.login-btn.naver { background-color: var(--naver)}
+/* .login-btn.naver { background-color: var(--naver)} */
 
 .container {
   width: min(1200px, 92vw);

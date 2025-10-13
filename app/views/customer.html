@@ -75,7 +75,7 @@
 
           if (app.status === 'QUOTED') {
             actionButtons = `<button class="sign-btn" data-id="${app.id}">전자서명하러가기</button>`;
-          } else if (app.status === 'READY') {
+          } else if (app.status === 'READY') { 
             actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
           } else if (app.status === 'PAID') {
             actionButtons = `<span>결제완료</span>`;
