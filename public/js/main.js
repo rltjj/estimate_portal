@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       try {
-        const res = await fetch("/estimate/app/controllers/send-sms.php", {
+        const res = await fetch("/app/controllers/send-sms.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData)

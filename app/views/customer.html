@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/estimate/public/css/customer.css">
+  <link rel="stylesheet" href="/public/css/customer.css">
 </head>
 
 <body>
@@ -40,12 +40,12 @@
 
   <script>
     document.getElementById('createEstimate').addEventListener('click', () => {
-      window.location.href = '/estimate/app/views/checklist.html';
+      window.location.href = '/checklist';
     });
 
     const estimateTableBody = document.querySelector('#estimateTable tbody');
 
-    fetch('/estimate/app/controllers/get_applications.php')
+    fetch('/app/controllers/get_applications.php')
       .then(res => res.json())
       .then(applications => {
         if (applications.error) {
@@ -94,12 +94,12 @@
         document.addEventListener('click', e => {
           if (e.target.classList.contains('sign-btn')) {
             const appId = e.target.dataset.id;
-            window.location.href = `/estimate/app/controllers/request_signature.php?app_id=${appId}`;
+            window.location.href = `/app/controllers/request_signature.php?app_id=${appId}`;
           }
 
           if (e.target.classList.contains('pay-btn')) {
             const appId = e.target.dataset.id;
-            window.location.href = `/estimate/app/controllers/request_payment.php?app_id=${appId}`;
+            window.location.href = `/app/controllers/request_payment.php?app_id=${appId}`;
           }
         });
 

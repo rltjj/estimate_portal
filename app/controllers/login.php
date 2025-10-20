@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../bootstrap.php';
+require_once __DIR__ . '/bootstrap.php';
 
 $auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
     'client_id' => GOOGLE_CLIENT_ID,

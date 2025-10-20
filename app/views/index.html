@@ -5,9 +5,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>기업경영지원센터</title>
-  <link rel="stylesheet" href="/estimate/public/css/main.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/main.css')?>">
-  <link rel="stylesheet" href="/estimate/public/css/popup.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/popup.css')?>">
-  <link rel="stylesheet" href="/estimate/public/css/headerfooter.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/headerfooter.css')?>">
+  <link rel="stylesheet"
+    href="/public/css/main.css">
+  <link rel="stylesheet"
+    href="/public/css/popup.css">
+  <link rel="stylesheet"
+    href="/public/css/headerfooter.css">
 </head>
 
 <body>
@@ -53,7 +56,7 @@
               phone: document.getElementById("phone").value
             };
 
-            const res = await fetch("/estimate/app/controllers/send-sms.php", {
+            const res = await fetch("/app/controllers/send-sms.php", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(formData)
@@ -99,18 +102,41 @@
 
       <div class="contact-wrapper">
         <div class="card contact-card">
-          <strong>운전자금</strong>
-          <div class="ex">원자재의 구매, 생산판매 활동등 기업의 운영에 소요되는 운전자금을 기업의 금융비용 절감을 위해 정부에서 저금리로 지원하는 정부 정책자금입니다.</div>
-          <strong>시설자금</strong>
-          <div class="ex">공장 건물, 사무소, 점포 등 영업 활동의 기초가 되는 고정시설에 투자되는 자금을 의미하며, 시설물 매입이나 공사 착공을 위한 자금입니다. 기계매입전 또는 공사전
-            시설자금을 대출을 신청진행할 수 있습니다.</div>
-          <strong>특허대출</strong>
-          <div class="ex">기업이 보유한 지적 재산권을 가치평가를 하여 이를 담보로자금을 조달할 수 있도록 평가비용을 지원하는데 성장성과 기술력을 통한 특허 자금 조달 방식입니다.</div>
-          <strong>그외</strong>
-          <div class="ex">중소기업진흥공단, 소상공인진흥공단, 기술보증기금, 신용보증기금, 신용보증재단, 한국무역보험공사, 부산경제진흥원등의 대출 상품에 따라 자금신청이 가능합니다.</div>
+          <div  class="item">
+            <div>
+              <strong>운전자금</strong>
+              <div class="ex">원자재의 구매, 생산판매 활동등 기업의 운영에 소요되는 운전자금을 기업의 금융비용 절감을 위해 정부에서 저금리로 지원하는 정부 정책자금입니다.</div>
+            </div>
+            <img src="/public/images/workplace.png" alt="운전자금">
+          </div>
+          <hr>
+          <div class="item">
+            <img src="/public/images/office.png" alt="시설자금">
+            <div>
+              <strong>시설자금</strong>
+              <div class="ex">공장 건물, 사무소, 점포 등 영업 활동의 기초가 되는 고정시설에 투자되는 자금을 의미하며, 시설물 매입이나 공사 착공을 위한 자금입니다. 기계매입전 또는 공사전
+              시설자금을 대출을 신청진행할 수 있습니다.</div>
+            </div>
+          </div>
+          <hr>
+          <div class="item">
+            <div>
+              <strong>특허대출</strong>
+              <div class="ex">기업이 보유한 지적 재산권을 가치평가를 하여 이를 담보로자금을 조달할 수 있도록 평가비용을 지원하는데 성장성과 기술력을 통한 특허 자금 조달 방식입니다.</div>
+            </div>
+            <img src="/public/images/money.png" alt="특허대출">
+          </div>
+          <hr>
+          <div class="item">
+            <img src="/public/images/coins.png" alt="그외">
+            <div>
+              <strong>그외</strong>
+              <div class="ex">중소기업진흥공단, 소상공인진흥공단, 기술보증기금, 신용보증기금, 신용보증재단, 한국무역보험공사, 부산경제진흥원등의 대출 상품에 따라 자금신청이 가능합니다.</div>
+            </div>
+          </div>
         </div>
         <a class="contact-btn" href="http://pf.kakao.com/_mASDn">
-          <img src="/estimate/public/images/speech.png" alt="카톡채널">문의하기
+          <img src="/public/images/speech.png" alt="카톡채널">문의하기
         </a>
       </div>
     </section>
@@ -247,8 +273,8 @@
   </main>
 
   <div id="footer"></div>
-  <script src="/estimate/public/js/hf.js"></script>
-  <script src="/estimate/public/js/main.js"></script>
+  <script src="/public/js/hf.js"></script>
+  <script src="/public/js/main.js"></script>
 </body>
 
 </html>

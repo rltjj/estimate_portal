@@ -59,8 +59,8 @@ $_SESSION['user_email'] = $email;
 $_SESSION['user_role'] = $user['role'] ?? 'USER';
 
 if ($_SESSION['user_role'] === 'ADMIN') {
-    header('Location: /estimate/app/views/admin.html');
+    header('Location: /admin');
 } else {
-    header('Location: /estimate/app/views/customer.html');
+    header('Location: /customer');
 }
 exit;

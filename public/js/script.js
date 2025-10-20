@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 데이터 불러오기
-    fetch('/estimate/app/controllers/get_products.php')
+    fetch('/app/controllers/get_products.php')
       .then(res => res.json())
       .then(data => {
           ITEMS = data.map(p => ({

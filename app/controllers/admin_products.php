@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
         $stmt->execute([$_POST['new_name'], $_POST['new_price'], $_POST['new_description']]);
     }
 
-    header("Location: /estimate/app/views/productslist.html");
+    header("Location: /productslist");
     exit;
 }
 
@@ -30,6 +30,6 @@ if (isset($_GET['delete'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_GET['delete']]);
 
-    header("Location: /estimate/app/views/productslist.html");
+    header("Location: /productslist");
     exit;
 }

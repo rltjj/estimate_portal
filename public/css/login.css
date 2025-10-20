@@ -59,7 +59,7 @@ main {
 }
 
 .login-btn.google { background-color: var(--google) }
-/* .login-btn.naver { background-color: var(--naver)} */
+.login-btn.naver { background-color: var(--naver) }
 
 .container {
   width: min(1200px, 92vw);

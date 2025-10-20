@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>관리자 - 신청 내역</title>
   <link rel="stylesheet"
-    href="/estimate/public/css/admin.css">
+    href="/public/css/admin.css">
 </head>
 
 <body>
@@ -16,11 +16,11 @@
   </div>
   <script>
     document.getElementById('go').addEventListener('click', () => {
-      window.location.href = '/estimate/app/views/estimate.html';
+      window.location.href = '/estimate';
     });
 
     document.getElementById('edit').addEventListener('click', () => {
-      window.location.href = '/estimate/app/views/productslist.html';
+      window.location.href = '/productslist';
     });
   </script>
 
@@ -51,7 +51,7 @@
       "FAILED": '실패'
     };
 
-    fetch('/estimate/app/controllers/get_applications_admin.php')
+    fetch('/app/controllers/get_applications_admin.php')
       .then(res => res.json())
       .then(applications => {
         tbody.innerHTML = "";
@@ -70,7 +70,7 @@
         tbody.querySelectorAll('button').forEach(btn => {
           btn.addEventListener('click', e => {
             const id = e.target.getAttribute('data-id');
-            window.location.href = `/estimate/app/views/estimate.html?estimateId=${id}`;
+            window.location.href = `/estimate.html?estimateId=${id}`;
           });
         });
       })

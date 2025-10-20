@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function formatWon(n) { return '₩' + (Number(n) || 0).toLocaleString(); }
 
-  fetch('/estimate/app/controllers/get_products.php')
+  fetch('/app/controllers/get_products.php')
     .then(res => res.json())
     .then(products => {
       ITEMS = products.map(p => ({
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }));
       state.items = JSON.parse(JSON.stringify(ITEMS));
 
-      return fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`);
+      return fetch(`/app/controllers/get_application_detail.php?id=${applicationId}`);
     })
     .then(res => res.json())
     .then(data => {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   async function getEstimateNumber() {
-    const res = await fetch('/estimate/app/controllers/get_new_estimate_number.php');
+    const res = await fetch('/app/controllers/get_new_estimate_number.php');
     const data = await res.json();
     if (data.number) return data.number;
     throw new Error('견적번호 생성 실패');
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const managerName = (managerInput.value || '').trim();
       const managerPhone = (phoneInput.value || '').trim();
 
-      let html = await (await fetch(`/estimate/app/views/pdf_template.html?${Date.now()}`)).text();
+      let html = await (await fetch(`/pdf_template.html?${Date.now()}`)).text();
 
       const keys = Object.keys(state.selections);
       if (!keys.length) { alert('선택한 상품이 없습니다.'); return; }
@@ -99,7 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const vat = Math.round(subtotal * 0.1);
       const total = subtotal + vat;
-      state.subtotal = subtotal; state.vat = vat; state.total = total;
+      state.subtotal = subtotal; 
+      state.vat = vat; state.total = total;
 
       const today = new Date().toLocaleDateString('ko-KR');
       const estimateNumber = await getEstimateNumber();
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('managerPhone', managerPhone);
       formData.append('pdf', pdfBlob, `${companyName}_${estimateNumber}.pdf`);
 
-      const res = await fetch('/estimate/app/controllers/send_estimate_email.php', { method:'POST', body: formData });
+      const res = await fetch('/app/controllers/send_estimate_email.php', { method:'POST', body: formData });
       const result = await res.json();
       if (!result.success) throw new Error(result.error || '알 수 없는 오류');
 

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>관리자 - 견적서 상세</title>
   <link rel="stylesheet"
-    href="/estimate/public/css/style.css?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/estimate/public/css/style.css')?>">
+    href="/public/css/style.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 
   <script>
     document.getElementById('return').addEventListener('click', () => {
-      window.location.href = '/estimate/app/views/admin.html';
+      window.location.href = '/admin';
     });
   </script>
 
@@ -59,8 +59,7 @@
 
       <div class="preview-actions">
         <button class="ghost" id="downloadPdfBtn">PDF 다운로드</button>&emsp;
-        <button class="ghost" id="sendEmailBtn">이메일로 견적서 발송</button>&emsp;
-        <button class="ghost" id="sendQuoteBtn">이메일로 결제링크 발송</button>
+        <button class="ghost" id="sendEmailBtn">이메일로 견적서 발송</button>
       </div>
     </div>
   </div>
@@ -71,8 +70,8 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <script src="/estimate/public/js/admin.js"></script>
-  <script src="/estimate/public/js/email.js"></script>
+  <script src="/public/js/admin.js"></script>
+  <script src="/public/js/email.js"></script>
 
 </body>
 

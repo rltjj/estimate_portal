@@ -51,7 +51,7 @@ try {
         $mail->Password   = $_ENV['GMAIL_PASSWORD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
-        $mail->setFrom('globalsungjin@gmail.com', '견적서 시스템');
+        $mail->setFrom($_ENV['GMAIL_USERNAME'], '견적서 시스템');
     } elseif ($provider === 'naver') {
         $mail->Host       = 'smtp.naver.com';
         $mail->Username   = $_ENV['NAVER_USERNAME'];
@@ -66,8 +66,15 @@ try {
     $mail->addAddress($user['email']);
     $mail->isHTML(true);
     $mail->Subject = "견적서 발송 안내 - {$estimateNo}";
-    $mail->Body    = "안녕하세요, {$user['name']} 고객님.<br><br>요청하신 견적서를 첨부파일로 보내드립니다.<br><br>감사합니다.";
+    $mail->Body    = "안녕하세요, 주식회사 성진글로벌입니다. <br><br>{$user['name']} 고객님, 요청하신 견적서와 계약서를 첨부파일로 보내드립니다.<br><br>감사합니다.";
     $mail->addAttachment($_FILES[$fileKey]['tmp_name'], $filename);
+
+    $contractPath = __DIR__ . '/contract_template.pdf'; 
+    $contractFilename = mb_encode_mimeheader('경영지원서비스계약서.pdf', 'UTF-8', 'B');
+    if (file_exists($contractPath)) {
+        $mail->addAttachment($contractPath, $contractFilename);
+    }
+
     $mail->send();
 
     $stmt3 = $pdo->prepare("UPDATE applications SET status = 'QUOTED' WHERE id = ?");

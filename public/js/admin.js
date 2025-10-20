@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function formatWon(n) { return '₩' + (Number(n) || 0).toLocaleString(); }
 
   // DB에서 상품 불러오기
-  fetch('/estimate/app/controllers/get_products.php')
+  fetch('/app/controllers/get_products.php')
     .then(res => res.json())
     .then(products => {
       ITEMS = products.map(p => ({
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       state.items = JSON.parse(JSON.stringify(ITEMS));
 
       if (applicationId) {
-        fetch(`/estimate/app/controllers/get_application_detail.php?id=${applicationId}`)
+        fetch(`/app/controllers/get_application_detail.php?id=${applicationId}`)
           .then(res => res.json())
           .then(data => {
             const application = data.application || {};
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- PDF 관련 추가 ---
   async function fetchEstimateNumber() {
-    const res = await fetch('/estimate/app/controllers/get_new_estimate_number.php');
+    const res = await fetch('/app/controllers/get_new_estimate_number.php');
     const data = await res.json();
     if (data.number) return data.number;
     else throw new Error('견적번호 생성 실패');
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function generatePdf() {
     try {
       const estimateNumber = await fetchEstimateNumber();
-      let html = await (await fetch(`/estimate/app/views/pdf_template.html?${Date.now()}`)).text();
+      let html = await (await fetch(`/pdf_template.html?${Date.now()}`)).text();
 
       const company = (companyNameInput.value || '').trim();
       const manager = (managerInput.value || '').trim();

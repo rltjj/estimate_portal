@@ -11,8 +11,8 @@ async function loadHTML(id, file) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadHTML("header", "/estimate/app/views/header.html");
-  loadHTML("footer", "/estimate/app/views/footer.html");
+  loadHTML("header", "/header.html");
+  loadHTML("footer", "/footer.html");
 });
 
 function initHamburger() {

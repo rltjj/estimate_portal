@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# --- 특정 경로 차단 (모든 도메인 적용) ---
+RewriteRule ^(admin|estimate|productslist|app|config|vendor)(/)?$ - [F,L]
+
+# HTML 자동 매칭
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# 루트 URL 접속 시
+RewriteRule ^$ index.html [L]
+
+# 일반 페이지
+RewriteRule ^service$ service.html [L]
+RewriteRule ^policy$ policy.html [L]
+RewriteRule ^corporate$ corporate.html [L]
+RewriteRule ^iso$ iso.html [L]
+RewriteRule ^about$ about.html [L]
+RewriteRule ^login$ login.html [L]
+RewriteRule ^customer$ customer.html [L]
+RewriteRule ^checklist$ checklist.html [L]

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>관리자 - 상품 정보</title>
-    <link rel="stylesheet" href="/estimate/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
     <style>
         table {
             width: 100%;
@@ -41,12 +41,12 @@
 
     <script>
         document.getElementById('return').addEventListener('click', () => {
-            window.location.href = '/estimate/app/views/admin.html';
+            window.location.href = '/admin';
         });
     </script>
     <div class="container">
         <h1>상품 관리</h1>
-        <form method="POST" action="/estimate/app/controllers/admin_products.php">
+        <form method="POST" action="/app/controllers/admin_products.php">
             <table id="productsTable">
                 <thead>
                     <tr>
@@ -76,7 +76,7 @@
     </div>
 
     <script>
-        fetch('/estimate/app/controllers/get_products.php')
+        fetch('/app/controllers/get_products.php')
             .then(res => res.json())
             .then(products => {
                 const tbody = document.querySelector('#productsTable tbody');
@@ -92,7 +92,7 @@
             <td><input type="text" name="name[]" value="${p.name}"></td>
             <td><input type="number" name="price[]" value="${p.price}"></td>
             <td><textarea name="description[]">${p.description ?? ''}</textarea></td>
-            <td><a href="/estimate/app/controllers/admin_products.php?delete=${p.id}" class="btn" onclick="return confirm('삭제하시겠습니까?')">삭제</a></td>
+            <td><a href="/app/controllers/admin_products.php?delete=${p.id}" class="btn" onclick="return confirm('삭제하시겠습니까?')">삭제</a></td>
           `;
                     tbody.appendChild(row);
                 });
