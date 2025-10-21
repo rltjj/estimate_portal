@@ -5,10 +5,10 @@ header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 try {
     if (!isset($_POST['user_id'], $_POST['application_id'], $_POST['total_amount']) || empty($_FILES['pdf'])) {

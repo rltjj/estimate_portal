@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../app/bootstrap.php';
 
 if (!isset($_GET['code'], $_GET['state'])) {
     exit('로그인 실패: 코드 또는 상태값 없음');

@@ -1,17 +1,31 @@
 RewriteEngine On
 
-# --- 특정 경로 차단 (모든 도메인 적용) ---
-RewriteRule ^(admin|estimate|productslist|app|config|vendor)(/)?$ - [F,L]
+# --- HTTP를 HTTPS로 강제 리다이렉트 ---
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# HTML 자동 매칭
+# --- 보안: 민감 경로와 파일 접근 차단 ---
+# app, config, vendor 폴더는 직접 접근 불가
+RewriteRule ^(app|config|vendor)(/)?$ - [F,L]
+
+# composer.json / composer.lock / .env 직접 접근 차단
+<FilesMatch "^(composer\.json|composer\.lock|\.env)$">
+    Require all denied
+</FilesMatch>
+
+# --- admin, estimate, productslist.html 보호 ---
+RewriteCond %{REQUEST_URI} ^/(admin|estimate|productslist)\.html$ [NC]
+RewriteRule ^(admin|estimate|productslist)\.html$ protect.php?file=$1.html [L]
+
+# --- HTML 자동 매칭 ---
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
-# 루트 URL 접속 시
+# --- 루트 URL 접속 시 ---
 RewriteRule ^$ index.html [L]
 
-# 일반 페이지
+# --- 일반 페이지 ---
 RewriteRule ^service$ service.html [L]
 RewriteRule ^policy$ policy.html [L]
 RewriteRule ^corporate$ corporate.html [L]

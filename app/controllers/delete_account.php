@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-require_once '../../bootstrap.php'; 
+require_once __DIR__ . '/../bootstrap.php';
 
 $userId = $_SESSION['user_id'] ?? null;
 

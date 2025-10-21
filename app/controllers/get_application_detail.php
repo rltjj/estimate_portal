@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 if (!isset($_GET['id'])) {
     echo json_encode(['error' => 'ID가 없습니다.']);
