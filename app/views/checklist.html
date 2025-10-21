@@ -15,7 +15,8 @@
     <div class="user-info">
       <label>회사명: <input type="text" id="company_name" required></label><br>
       <label>담당자 이름: <input type="text" id="user_name" required></label><br>
-      <label>연락처: <input type="text" id="phone" required></label>
+      <label>연락처: <input type="text" id="phone" required></label><br>
+      <label>이메일: <input type="text" id="real_email" required></label>
     </div>
 
     <br>
@@ -49,9 +50,10 @@
       const company_name = document.getElementById('company_name').value.trim();
       const user_name = document.getElementById('user_name').value.trim();
       const phone = document.getElementById('phone').value.trim();
+      const real_email = document.getElementById('real_email').value.trim();
 
-      if (!company_name || !user_name || !phone) {
-        alert('회사명, 이름, 연락처를 모두 입력해주세요.');
+      if (!company_name || !user_name || !phone || !real_email) {
+        alert('회사명, 이름, 연락처, 이메일을 모두 입력해주세요.');
         return;
       }
 
@@ -74,6 +76,7 @@
           company_name,
           user_name,
           phone,
+          real_email, 
           products: selectedProducts
         })
       })

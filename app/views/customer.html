@@ -37,10 +37,31 @@
     </table>
   </div>
 
+  <div class="container delete-btn">
+    <button id="deleteAccount">회원 탈퇴</button>
+  </div>
 
   <script>
     document.getElementById('createEstimate').addEventListener('click', () => {
       window.location.href = '/checklist';
+    });
+
+    document.getElementById('deleteAccount').addEventListener('click', () => {
+      if (!confirm('정말 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
+
+      fetch('/app/controllers/delete_account.php', {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('회원 탈퇴가 완료되었습니다.');
+            window.location.href = '/';
+          } else {
+            alert('회원 탈퇴 실패: ' + data.message);
+          }
+        })
+        .catch(err => alert('서버 오류: ' + err.message));
     });
 
     const estimateTableBody = document.querySelector('#estimateTable tbody');
@@ -60,7 +81,6 @@
           return;
         }
 
-        // 상태 매핑 추가
         const statusMap = {
           REQUESTED: '신청됨',
           QUOTED: '견적됨',
@@ -75,10 +95,12 @@
 
           if (app.status === 'QUOTED') {
             actionButtons = `<button class="sign-btn" data-id="${app.id}">전자서명하러가기</button>`;
-          } else if (app.status === 'READY') { 
+          } else if (app.status === 'READY') {
             actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
           } else if (app.status === 'PAID') {
             actionButtons = `<span>결제완료</span>`;
+          } else if (app.status === 'REQUESTED') {
+            actionButtons = `<button class="cancel-btn" data-id="${app.id}">신청취소</button>`;
           }
 
           tr.innerHTML = `
@@ -100,6 +122,27 @@
           if (e.target.classList.contains('pay-btn')) {
             const appId = e.target.dataset.id;
             window.location.href = `/app/controllers/request_payment.php?app_id=${appId}`;
+          }
+
+          if (e.target.classList.contains('cancel-btn')) {
+            const appId = e.target.dataset.id;
+            if (confirm('정말 신청을 취소하시겠습니까?')) {
+              fetch(`/app/controllers/cancel_application.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: appId })
+              })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    alert('신청이 취소되었습니다.');
+                    e.target.closest('tr').remove();
+                  } else {
+                    alert('취소 실패: ' + data.message);
+                  }
+                })
+                .catch(err => alert('서버 오류: ' + err.message));
+            }
           }
         });
 

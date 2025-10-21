@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sendEmailBtn?.addEventListener('click', async () => {
     try {
       if (!currentUserIdInput.value) throw new Error('해당 유저 없음');
+
       const companyName = (companyNameInput.value || '').trim() || '견적서';
       const managerName = (managerInput.value || '').trim();
       const managerPhone = (phoneInput.value || '').trim();
@@ -100,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const vat = Math.round(subtotal * 0.1);
       const total = subtotal + vat;
       state.subtotal = subtotal; 
-      state.vat = vat; state.total = total;
+      state.vat = vat; 
+      state.total = total;
 
       const today = new Date().toLocaleDateString('ko-KR');
       const estimateNumber = await getEstimateNumber();
@@ -117,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .replaceAll('{{TAX}}', formatWon(vat))
         .replaceAll('{{TOTAL}}', formatWon(total));
 
-      const pdfBlob = await html2pdf()
+      const pdfBlobRaw = await html2pdf()
         .set({
           margin: [5,5,5,5],
           filename: `${companyName}_${estimateNumber}.pdf`,
@@ -128,22 +130,35 @@ document.addEventListener('DOMContentLoaded', () => {
         .from(html)
         .outputPdf('blob');
 
+      const pdfFile = new File([pdfBlobRaw], `${companyName}_${estimateNumber}.pdf`, { type: 'application/pdf' });
+
       const formData = new FormData();
       formData.append('user_id', currentUserIdInput.value);
       formData.append('application_id', applicationId);
       formData.append('companyName', companyName);
       formData.append('managerName', managerName);
       formData.append('managerPhone', managerPhone);
-      formData.append('pdf', pdfBlob, `${companyName}_${estimateNumber}.pdf`);
+      formData.append('total_amount', state.total); 
+      formData.append('pdf', pdfFile); 
 
-      const res = await fetch('/app/controllers/send_estimate_email.php', { method:'POST', body: formData });
+      console.log({
+        user_id: currentUserIdInput.value,
+        application_id: applicationId,
+        total_amount: state.total,
+        pdfFile
+      });
+
+      const res = await fetch('/app/controllers/send_estimate_email.php', {
+        method: 'POST',
+        body: formData
+      });
       const result = await res.json();
       if (!result.success) throw new Error(result.error || '알 수 없는 오류');
 
       alert(`이메일 발송 완료!\n파일명: ${result.filename}\n견적번호: ${estimateNumber}`);
 
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(pdfBlob);
+      a.href = URL.createObjectURL(pdfFile);
       a.download = `${companyName}_${estimateNumber}.pdf`;
       a.click();
       URL.revokeObjectURL(a.href);

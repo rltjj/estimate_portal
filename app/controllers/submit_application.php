@@ -6,16 +6,17 @@ $data = json_decode(file_get_contents('php://input'), true);
 $company_name = $data['company_name'];
 $user_name = $data['user_name'];
 $phone = $data['phone'];
+$real_email = $data['real_email'];
 $products = $data['products'];
 
 $user_id = $_SESSION['user_id'] ?? null;
 
 if($user_id){
-    $stmt = $pdo->prepare("UPDATE users SET company_name=?, name=?, phone=? WHERE id=?");
-    $stmt->execute([$company_name, $user_name, $phone, $user_id]);
+    $stmt = $pdo->prepare("UPDATE users SET company_name=?, name=?, phone=?, real_email=? WHERE id=?");
+    $stmt->execute([$company_name, $user_name, $phone, $real_email, $user_id]);
 } else {
-    $stmt = $pdo->prepare("INSERT INTO users (company_name, name, phone) VALUES (?,?,?)");
-    $stmt->execute([$company_name, $user_name, $phone]);
+    $stmt = $pdo->prepare("INSERT INTO users (company_name, name, phone, real_email) VALUES (?,?,?,?)");
+    $stmt->execute([$company_name, $user_name, $phone, $real_email]);
     $user_id = $pdo->lastInsertId();
     $_SESSION['user_id'] = $user_id;
 }
