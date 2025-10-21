@@ -5,8 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>관리자 - 신청 내역</title>
-  <link rel="stylesheet"
-    href="/public/css/admin.css">
+  <link rel="stylesheet" href="/public/css/admin.css">
+  <style>
+    .filters, .pagination { margin: 10px 0; }
+    .pagination {
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+      margin: 20px 0;
+    }
+    .pagination button { margin: 0 5px; padding: 5px 10px; cursor: pointer; }
+    .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+    th { cursor: pointer; }
+  </style>
 </head>
 
 <body>
@@ -14,18 +25,31 @@
     <button id="go">견적서 생성하기</button>
     <button id="edit">상품 정보 수정하기</button>
   </div>
-  <script>
-    document.getElementById('go').addEventListener('click', () => {
-      window.location.href = '/estimate';
-    });
 
-    document.getElementById('edit').addEventListener('click', () => {
-      window.location.href = '/productslist';
-    });
+  <script>
+    document.getElementById('go').addEventListener('click', () => { window.location.href = '/estimate'; });
+    document.getElementById('edit').addEventListener('click', () => { window.location.href = '/productslist'; });
   </script>
 
   <div class="container">
     <h1>신청 내역 관리</h1>
+
+    <div class="filters">
+      상태 필터:
+      <select id="statusFilter">
+        <option value="">전체</option>
+        <option value="REQUESTED">신청됨</option>
+        <option value="QUOTED">견적 완료</option>
+        <option value="READY">결제준비됨</option>
+        <option value="PAID">결제됨</option>
+        <option value="FAILED">실패</option>
+      </select>
+      &nbsp;&nbsp;
+      신청일 정렬:
+      <button id="sortDesc">최신순</button>
+      <button id="sortAsc">오래된순</button>
+    </div>
+
     <table id="estimateList">
       <thead>
         <tr>
@@ -36,12 +60,23 @@
           <th>상세보기</th>
         </tr>
       </thead>
-      <tbody>
-      </tbody>
+      <tbody></tbody>
     </table>
+
+    <div class="pagination">
+      <button id="prev">이전</button>
+      <span id="pageNum">1</span>
+      <button id="next">다음</button>
+    </div>
   </div>
 
   <script>
+    let currentPage = 1;
+    const pageSize = 5;
+    let currentSort = 'desc';
+    let currentStatus = '';
+    let totalCount = 0;
+
     const tbody = document.querySelector('#estimateList tbody');
     const statusMap = {
       "REQUESTED": "신청됨",
@@ -51,32 +86,58 @@
       "FAILED": '실패'
     };
 
-    fetch('/app/controllers/get_applications_admin.php')
-      .then(res => res.json())
-      .then(applications => {
-        tbody.innerHTML = "";
-        applications.forEach(app => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${app.userName || '-'}</td>
-            <td>${app.company || '-'}</td>
-            <td>${app.date}</td>
-            <td>${statusMap[app.state] || app.state}</td>
-            <td><button data-id="${app.id}">상세보기</button></td>
-          `;
-          tbody.appendChild(tr);
-        });
+    function loadApplications() {
+      fetch(`/app/controllers/get_applications_admin.php?page=${currentPage}&pageSize=${pageSize}&sort=${currentSort}&status=${currentStatus}`)
+        .then(res => res.json())
+        .then(data => {
+          const applications = data.applications;
+          totalCount = data.totalCount;
 
-        tbody.querySelectorAll('button').forEach(btn => {
-          btn.addEventListener('click', e => {
-            const id = e.target.getAttribute('data-id');
-            window.location.href = `/estimate.html?estimateId=${id}`;
+          tbody.innerHTML = "";
+          applications.forEach(app => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${app.userName || '-'}</td>
+              <td>${app.company || '-'}</td>
+              <td>${app.date}</td>
+              <td>${statusMap[app.state] || app.state}</td>
+              <td><button data-id="${app.id}">상세보기</button></td>
+            `;
+            tbody.appendChild(tr);
           });
-        });
-      })
-      .catch(err => console.error("Fetch error:", err));
+
+          document.getElementById('prev').disabled = currentPage === 1;
+          document.getElementById('next').disabled = currentPage * pageSize >= totalCount;
+
+          document.getElementById('pageNum').innerText = currentPage;
+
+          tbody.querySelectorAll('button[data-id]').forEach(btn => {
+            btn.addEventListener('click', e => {
+              const id = e.target.getAttribute('data-id');
+              window.location.href = `/estimate.html?estimateId=${id}`;
+            });
+          });
+        })
+        .catch(err => console.error("Fetch error:", err));
+    }
+
+    document.getElementById('prev').addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; loadApplications(); }
+    });
+    document.getElementById('next').addEventListener('click', () => {
+      if (currentPage * pageSize < totalCount) { currentPage++; loadApplications(); }
+    });
+
+    document.getElementById('sortDesc').addEventListener('click', () => { currentSort = 'desc'; loadApplications(); });
+    document.getElementById('sortAsc').addEventListener('click', () => { currentSort = 'asc'; loadApplications(); });
+
+    document.getElementById('statusFilter').addEventListener('change', e => {
+      currentStatus = e.target.value;
+      currentPage = 1;
+      loadApplications();
+    });
+
+    loadApplications();
   </script>
-
 </body>
-
 </html>
