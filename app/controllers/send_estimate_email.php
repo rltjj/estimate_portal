@@ -1,106 +1,120 @@
 <?php
-file_put_contents(__DIR__ . '/debug_log.txt', print_r($_POST, true) . print_r($_FILES, true));
-
 header('Content-Type: application/json; charset=utf-8');
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php'; 
+require __DIR__ . '/../../../vendor/autoload.php'; 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require __DIR__ . '/../../../vendor/autoload.php';
 
 try {
-    if (!isset($_POST['user_id'], $_POST['application_id'], $_POST['total_amount']) || empty($_FILES['pdf'])) {
-        throw new Exception('잘못된 요청입니다.');
-    }
+    $userId = intval($_POST['user_id'] ?? 0);
+    $applicationId = intval($_POST['application_id'] ?? 0);
+    $companyName = $_POST['companyName'] ?? '견적서';
+    $totalAmount = $_POST['total_amount'] ?? null;
+    $estimateNumber = $_POST['estimate_number'] ?? '(번호없음)';
 
-    $userId        = intval($_POST['user_id']);
-    $applicationId = intval($_POST['application_id']);
-    $totalAmount   = intval($_POST['total_amount']); 
-    $companyName   = $_POST['companyName'] ?? '견적서';
+    if (!$userId || !$applicationId) throw new Exception('user_id 또는 application_id 누락');
+    if (!$totalAmount) throw new Exception('총액(total_amount) 누락');
+    if (empty($_FILES['pdf'])) throw new Exception('PDF 파일이 없습니다.');
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$user) throw new Exception('해당 유저 없음');
+    if (!$user) throw new Exception('유저 정보를 찾을 수 없습니다.');
 
-    if (empty($user['real_email']) || strpos($user['real_email'], '@example.com') !== false) {
-        throw new Exception('실제 이메일이 없어 메일 발송 불가');
-    }
+    // 모두싸인 API 호출
+    $apiUrl = 'https://api.modusign.co.kr/documents/request-with-template';
+    $apiKey = $_ENV['MODUSIGN_API_KEY'];
+    $userEmail = $_ENV['MODUSIGN_USER_EMAIL'];
+    $templateId = $_ENV['MODUSIGN_TEMPLATE_ID'];
+    $auth = base64_encode("{$userEmail}:{$apiKey}");
 
-    $pdo->beginTransaction();
+    $payload = [
+        'templateId' => $templateId,
+        'document' => [
+            'title' => "{$companyName}_계약서_{$estimateNumber}",
+            'participantMappings' => [
+                [
+                    'role' => '수요자',
+                    'name' => $user['name'],
+                    'signingMethod' => [
+                        'type' => 'EMAIL',
+                        'value' => $user['real_email']
+                    ],
+                    'signingDuration' => 20160,
+                    'requesterMessage' => '견적서 확인 후 서명해주세요.'
+                ]
+            ]
+        ]
+    ];
 
-    $today = date('ymd');
-    $time  = date('Hi');
-    $stmtCnt = $pdo->prepare("SELECT COUNT(*) as cnt FROM estimates WHERE DATE(created_at) = CURDATE()");
-    $stmtCnt->execute();
-    $row = $stmtCnt->fetch();
-    $count = $row['cnt'] + 1;
-    $estimateNo = $today . '_' . $time . '_' . str_pad($count, 2, '0', STR_PAD_LEFT);
-
-    $stmtInsert = $pdo->prepare("INSERT INTO estimates (estimate_number) VALUES (?)");
-    $stmtInsert->execute([$estimateNo]);
-
-    $stmtQuote = $pdo->prepare("
-        INSERT INTO quotes 
-        (application_id, total_amount, sent_email, file_path, sign_request_id, sign_status, created_at)
-        VALUES (?, ?, 0, NULL, NULL, 'PENDING', NOW())
-    ");
-    $stmtQuote->execute([$applicationId, $totalAmount]);
-    $quoteId = $pdo->lastInsertId();
-
-    $fileKey  = 'pdf';
-    $filename = mb_encode_mimeheader($companyName . '_' . $estimateNo . '.pdf', 'UTF-8', 'B');
-
-    $mail = new PHPMailer(true);
-    $mail->CharSet   = 'UTF-8';
-    $mail->isSMTP();
-    $mail->SMTPAuth  = true;
-    $mail->Host      = 'smtp.gmail.com';
-    $mail->Username  = $_ENV['GMAIL_USERNAME'];
-    $mail->Password  = $_ENV['GMAIL_PASSWORD'];
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port      = 587;
-    $mail->setFrom($_ENV['GMAIL_USERNAME'], '견적서 시스템');
-
-    $mail->addAddress($user['real_email']);
-    $mail->isHTML(true);
-    $mail->Subject = "견적서 발송 안내 - {$estimateNo}";
-    $mail->Body    = "안녕하세요, 주식회사 성진글로벌입니다. <br><br>{$user['name']} 고객님, 요청하신 견적서와 계약서를 첨부파일로 보내드립니다.<br><br>감사합니다.";
-
-    if (!isset($_FILES[$fileKey]) || $_FILES[$fileKey]['error'] !== UPLOAD_ERR_OK) {
-        throw new Exception('첨부파일 업로드 실패');
-    }
-    $mail->addAttachment($_FILES[$fileKey]['tmp_name'], $filename);
-
-    $contractPath     = __DIR__ . '/contract_template.pdf'; 
-    $contractFilename = mb_encode_mimeheader('경영지원서비스계약서.pdf', 'UTF-8', 'B');
-    if (file_exists($contractPath)) {
-        $mail->addAttachment($contractPath, $contractFilename);
-    }
-
-    try {
-        $mail->send();
-    } catch (Exception $e) {
-        throw new Exception("메일 전송 실패: {$mail->ErrorInfo}");
-    }
-
-    $pdo->prepare("UPDATE quotes SET sent_email = 1 WHERE id = ?")->execute([$quoteId]);
-    $pdo->prepare("UPDATE applications SET status = 'QUOTED' WHERE id = ?")->execute([$applicationId]);
-
-    $pdo->commit();
-
-    echo json_encode([
-        'success'     => true,
-        'filename'    => $filename,
-        'estimate_no' => $estimateNo,
-        'quote_id'    => $quoteId
+    $ch = curl_init($apiUrl);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "Authorization: Basic {$auth}",
+            "Content-Type: application/json",
+            "Accept: application/json"
+        ],
+        CURLOPT_POSTFIELDS => json_encode($payload)
     ]);
 
+    $response = curl_exec($ch);
+    $err = curl_error($ch);
+    curl_close($ch);
+
+    if ($err) throw new Exception("모두싸인 API 호출 실패: {$err}");
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) throw new Exception("JSON 파싱 실패: ".json_last_error_msg());
+    if (empty($data['id'])) throw new Exception("서명 요청 실패: ".print_r($data, true));
+
+    $signRequestId = $data['id'];
+    $signLink = $data['redirectUrl'] ?? '#';
+
+    // 이메일 발송
+    $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8';
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = $_ENV['GMAIL_USERNAME'];
+    $mail->Password = $_ENV['GMAIL_PASSWORD'];
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+
+    $mail->setFrom($_ENV['GMAIL_USERNAME'], '회사명');
+    $mail->addAddress($user['real_email']);
+    $mail->isHTML(true);
+    $mail->Subject = "[{$companyName}] 견적서 및 서명 요청 안내";
+    $mail->Body = "
+        안녕하세요, {$user['name']}님.<br><br>
+        첨부된 견적서를 확인 후 아래 링크로 전자서명 해주세요.<br>
+        <a href='{$signLink}'>전자서명 바로가기</a><br><br>
+        감사합니다.
+    ";
+    $mail->addAttachment($_FILES['pdf']['tmp_name'], "{$companyName}_{$estimateNumber}.pdf");
+    $mail->send();
+
+    // DB에 기록
+    $stmt = $pdo->prepare("
+        INSERT INTO quotes (application_id, sign_request_id, total_amount) 
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE sign_request_id=?, total_amount=?
+    ");
+    $stmt->execute([$applicationId, $signRequestId, $totalAmount, $signRequestId, $totalAmount]);
+
+    $stmt = $pdo->prepare("
+        UPDATE applications 
+        SET status='QUOTED' 
+        WHERE id=?
+    ");
+    $stmt->execute([$applicationId]);
+
+    echo json_encode(['success'=>true, 'sign_link'=>$signLink]);
+
 } catch (Throwable $e) {
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    echo json_encode(['success'=>false, 'error'=>$e->getMessage()]);
 }

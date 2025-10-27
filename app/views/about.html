@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진글로벌 경영지원 서비스</title>
-    <link rel="stylesheet"
-        href="/public/css/about.css">
-    <link rel="stylesheet"
-        href="/public/css/headerfooter.css">
+    <link rel="stylesheet" href="/public/css/about.css">
+    <link rel="stylesheet" href="/public/css/headerfooter.css">
 </head>
 
 <body>
@@ -32,7 +30,19 @@
                 또한 성진글로벌은 ESG 가치 실현을 위해 친환경 에너지 사업, 스마트 팜, AI 기반 비즈니스 모델 개발 등 지속 가능한 미래 산업에도
                 적극 투자하고 있습니다. 고객과의 신뢰를 바탕으로, 단순한 컨설팅을 넘어 기업의 장기적 성장을 함께 설계하고 실현하는 동반자가 되겠습니다.
             </p>
-            <img src="/public/images/co-working-6872214_1280.png" alt="ceo" height="250px">
+        </div>
+        <br><br>
+        <span class="section-title">| 오시는 길</span>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="map-info">
+                <h3>주식회사 성진글로벌</h3>
+                <p>주소 : 부산광역시 남구 신선로 410 동명대학교 산학협력관 210호</p>
+                <p>전화번호 : 010-8488-1588</p>
+                <p>이메일 : sungjin_g@naver.com</p>
+                <button id="directionBtn">길찾기</button>
+            </div>
         </div>
     </main>
 
@@ -46,6 +56,30 @@
     </div>
 
     <div id="footer2"></div>
+
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ece956117674f84b2e76c2a053a8060b"></script>
+    <script>
+      window.onload = function () {
+        var container = document.getElementById('map');
+        var options = {
+          center: new kakao.maps.LatLng(35.1210, 129.0996), 
+          level: 3
+        };
+
+        var map = new kakao.maps.Map(container, options);
+
+        var markerPosition = new kakao.maps.LatLng(35.1210, 129.0996);
+        var marker = new kakao.maps.Marker({
+          position: markerPosition
+        });
+        marker.setMap(map);
+
+        document.getElementById('directionBtn').addEventListener('click', function () {
+          var url = "https://map.kakao.com/link/to/동명대학교산학협력관,35.1210,129.0996";
+          window.open(url, "_blank"); 
+        });
+      }
+    </script>
 
     <script src="/public/js/hf.js"></script>
 </body>

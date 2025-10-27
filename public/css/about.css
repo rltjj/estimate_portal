@@ -32,15 +32,15 @@ html {
 #header .container {
     width: min(1200px, 92vw);
     margin: 0 auto;
-    padding: 0 20px; 
+    padding: 0 20px;
 }
 
 #int {
     width: 100%;
-    height: 80vh;
+    height: 40vh;
     max-width: none;
     margin: 0;
-    padding-top: 20px;
+    padding-top: 35px;
     box-sizing: border-box;
     background-image: url('/public/images/int01.jpg');
     background-size: cover;
@@ -70,7 +70,7 @@ html {
 
 #int h1 {
     text-align: center;
-    font-size: 4rem;
+    font-size: 3rem;
     color: #ffffff;
     margin-top: 0;
 }
@@ -113,6 +113,41 @@ main {
     border-radius: 10px;
     width: 40%;
     height: auto;
+}
+
+.map-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+#map {
+    width: 50%;
+    height: 400px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.map-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.map-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.map-info button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
 }
 
 #end {
