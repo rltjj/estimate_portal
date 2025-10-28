@@ -30,9 +30,9 @@ html {
 }
 
 #header .container {
-    width: min(1200px, 92vw);
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; 
+    padding: 0; 
 }
 
 #int {

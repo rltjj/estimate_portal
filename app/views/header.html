@@ -1,17 +1,40 @@
 <header>
-  <nav class="container">
+  <nav class="container" id="mainNav">
     <div class="logo">
       <a href="/"><img id="log" src="/public/images/log.png" alt="성진글로벌 로고">기업경영지원센터</a>
     </div>
 
-    <button class="hamburger" id="hamburgerBtn">☰</button>
+    <button class="hamburger" id="hamburgerBtn" aria-expanded="false" aria-label="메뉴 열기">☰</button>
 
     <div class="navlinks" id="navLinks">
-      <a href="/policy">정책자금</a>
-      <a href="/corporate">기업인증</a>
-      <a href="/iso">ISO</a>
-      <a href="/about">회사소개</a>
-      <a href="/login">신청하기</a>
+      <div class="dropdown"><a href="/policy">정책자금</a></div>
+      <div class="dropdown"><a href="/corporate">기업인증</a></div>
+      <div class="dropdown"><a href="/iso">ISO</a></div>
+      <div class="dropdown"><a href="/about">회사소개</a></div>
+      <div class="dropdown"><a href="/login">신청하기</a></div>
+    </div>
+    
+    <div id="megaBar" aria-hidden="true">
+      <div class="mega-column" style="width: 168px;">
+        <a href="/policy/smallbiz">소상공인</a>
+        <a href="/policy/smb">중소벤처기업</a>
+        <a href="/policy/guarantee">신용보증 및 기술보증</a>
+      </div>
+      <div class="mega-column" style="width: 164px;">
+        <a href="/corporate/lab">기업부설연구소</a>
+        <a href="/corporate/venture">벤처/이노비즈/메인비즈</a>
+      </div>
+      <div class="mega-column" style="width: 130px;">
+        <a href="/iso/9001">ISO 9001</a>
+        <a href="/iso/14001">ISO 14001</a>
+      </div>
+      <div class="mega-column" style="width: 164px;">
+        <a href="/about/greeting">인삿말</a>
+        <a href="/about/location">오시는길</a>
+      </div>
+      <div class="mega-column">
+        <a href="/login">로그인</a>
+      </div>
     </div>
   </nav>
 </header>

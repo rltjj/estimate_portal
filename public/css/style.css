@@ -29,6 +29,14 @@ body {
     box-shadow: var(--shadow);
 }
 
+#pricingEditor {
+    display: none;
+  }
+  
+  #pricingEditor.parent-card {
+    display: none;
+  }
+
 h1 {
     margin: 0 0 10px;
     font-size: 20px;

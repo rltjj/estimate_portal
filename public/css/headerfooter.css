@@ -3,7 +3,6 @@
   src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
     url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
   font-weight: 300;
-  font-style: normal;
 }
 
 @font-face {
@@ -11,7 +10,6 @@
   src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
     url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
   font-weight: 400;
-  font-style: normal;
 }
 
 @font-face {
@@ -19,7 +17,6 @@
   src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
     url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
   font-weight: 700;
-  font-style: normal;
 }
 
 header {
@@ -47,8 +44,8 @@ header nav.container {
 
 .logo a {
   display: flex;
-  align-items: center; 
-  gap: 0.6rem; 
+  align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
   color: #185aa5;
   font-family: 'KoPubWorldDotum', sans-serif;
@@ -62,17 +59,10 @@ header nav.container {
 }
 
 .navlinks {
-  display: flex; 
-  flex-direction: row;
-  gap: 3rem;
-  margin-left: auto; 
-  position: static;
-  height: auto;
-  background: none;
-}
-
-.navlinks.show {
   display: flex;
+  flex-direction: row;
+  gap: 6rem;
+  margin-left: auto;
 }
 
 .navlinks a {
@@ -87,16 +77,94 @@ header nav.container {
   color: #185aa5;
 }
 
-.hamburger {
-  display: block;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #185aa5;
-  z-index: 210; 
-  margin-left: auto;
+.dropdown {
+  position: relative;
 }
+
+#megaBar {
+  display: none;
+  position: absolute;
+  top: 90%;
+  right: 0;
+  width: 696px;
+  background: #fff;
+  padding: 1rem 0;
+  justify-content: flex-start;
+}
+
+#megaBar .mega-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#megaBar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+#megaBar a:hover {
+  color: #185aa5;
+}
+
+nav {
+  position: relative;
+}
+
+@media (min-width: 1080px) {
+  .navlinks:hover + #megaBar,
+  #megaBar:hover {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navlinks {
+    background: none;
+    position: static;
+  }
+}
+
+@media (max-width: 1080px) {
+  .hamburger {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #185aa5;
+  }
+
+  .navlinks {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #003663;
+    z-index: 200;
+    padding: 3rem 1.5rem;
+    overflow-y: auto;
+  }
+
+  .navlinks.show {
+    display: flex;
+  }
+
+  .navlinks a {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    width: 100%;
+  }
+
+}
+
 
 .footer1 {
   display: flex;
@@ -116,12 +184,12 @@ header nav.container {
 }
 
 #footer2 {
-    background-color: #000;
-    color: #fff;
-    padding: 50px 20%;
-    font-family: 'KoPubWorldDotum', sans-serif;
-    font-weight: 400;
-    border-top: 1px solid #444;
+  background-color: #000;
+  color: #fff;
+  padding: 50px 20%;
+  font-family: 'KoPubWorldDotum', sans-serif;
+  font-weight: 400;
+  border-top: 1px solid #444;
 }
 
 #footer2 h1 {
@@ -134,95 +202,14 @@ header nav.container {
   color: #ccc;
 }
 
-@media (min-width: 769px) {
-  .navlinks {
-    display: flex;
-    position: static;
-    flex-direction: row;
-    height: auto;
-    background: none;
-    gap: 3rem;
-     margin-left: auto;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  .navlinks a {
-    font-size: 20px;
-    color: #000;
-    border: none;
-  }
-}
-
 @media (max-width: 768px) {
-  .navlinks {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 60%;
-    height: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    background: #003663;
-    z-index: 200;
-    padding: 3rem 0;
-    box-sizing: border-box;
-  }
-
-  .navlinks.show {
-    display: flex;
-  }
-
-  .navlinks { --item-gap: 10px; --separator-color: #444c53; --separator-height: 1px; }
-
-  .navlinks a {
-    display: block;
-    width: 100%;
-    padding: 0rem 1.5rem 0rem;
-    text-align: left;
-    align-items: center;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 400;
-    box-sizing: border-box;
-    position: relative;
-  }
-
-  .navlinks a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: var(--separator-height);
-    background: var(--separator-color);
-    top: 50px;
-    pointer-events: none;
-  }
-
-  .navlinks a:last-child {
-    margin-bottom: 0;
-  }
-  .navlinks a:last-child::after {
-    display: none;
-  }
-
-  .hamburger {
-    display: block !important;
-  }
-
   #footer2 {
     padding: 2rem 20px;
+    font-size: 0.8rem;
   }
 
   #footer2 h1 {
     font-size: 1rem;
-  }
-
-  #footer2 {
-    font-size: 0.8rem;
   }
 
   #footer2 span {
