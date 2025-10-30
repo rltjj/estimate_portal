@@ -28,10 +28,10 @@ html {
     font-family: 'KoPubWorldDotum', sans-serif;
 }
 
-#header .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0; 
+header nav.container {
+    padding: 0.8rem 10%; 
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 #int {

@@ -13,6 +13,12 @@ body {
   color: var(--text);
 }
 
+header nav.container {
+    padding: 0.8rem 10%; 
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 #int {
     width: 100%;
     height: 40vh;
@@ -30,6 +36,13 @@ body {
     color: white;
     text-align: center;
     position: relative;
+}
+
+#int>#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 #int p {
