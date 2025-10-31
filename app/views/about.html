@@ -17,6 +17,14 @@
     <h1>회사소개 및 인사말</h1>
   </div>
 
+  <a class="up-btn" href="#">
+    <img src="/public/images/up.png" alt="위로">
+  </a>
+
+  <a class="contact-btn" href="http://pf.kakao.com/_mASDn">
+    <img src="/public/images/speech.png" alt="카톡채널">
+  </a>
+
   <main id="container">
     <span class="section-title" id="ceo">| CEO Message</span>
     <p class="ceo-title">주식회사 성진글로벌 인사말</p>
@@ -60,13 +68,13 @@
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=111b357cdf8acda882993628b4edbd48"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-    
+
       if (window.location.hash) {
         const target = document.querySelector(window.location.hash);
         if (target) {
           setTimeout(() => {
             target.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 300); 
+          }, 300);
         }
       }
     });

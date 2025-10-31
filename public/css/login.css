@@ -59,6 +59,53 @@ header nav.container {
     margin-top: 0;
 }
 
+.up-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 10px auto 0;
+  background-color: #ccc;
+  color: var(--text);
+  border: none;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  padding: 1rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 3000;
+}
+
+.up-btn img{
+  width: 2.5rem;
+}
+
+.contact-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 10px auto 0;
+  background-color: #ffd166;
+  border: none;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  padding: 1rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 3000;
+}
+
+.contact-btn img{
+  width: 2.5rem;
+}
+
 main {
   display: flex;
   justify-content: center;
@@ -85,7 +132,7 @@ main {
 .login-container p {
   margin-bottom: 24px;
   color: #666;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .login-buttons {
