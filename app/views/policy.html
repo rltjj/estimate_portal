@@ -21,11 +21,27 @@
 
     <main id="container">
         <span class="section-title">| Policy Funds</span>
+        <span class="section-title" id="smallbiz">| 소상공인</span>
+        <span class="section-title" id="smb">| 중소벤처기업진흥공단</span>
+        <span class="section-title" id="guarantee">| 신용보증 및 기술보증</span>
         
     </main>
 
     <div id="footer2"></div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 300);
+                }
+            }
+        });
+    </script>
     <script src="/public/js/hf.js"></script>
 </body>
 

@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진글로벌 경영지원 서비스</title>
-    <link rel="stylesheet"
-        href="/public/css/corporate.css">
-    <link rel="stylesheet"
-        href="/public/css/headerfooter.css">
+    <link rel="stylesheet" href="/public/css/corporate.css">
+    <link rel="stylesheet" href="/public/css/headerfooter.css">
 </head>
 
 <body>
@@ -21,11 +19,26 @@
 
     <main id="container">
         <span class="section-title">| Corporate Certification</span>
-        
+        <span class="section-title" id="lab">| 기업부설연구소</span>
+        <span class="section-title" id="venture">| 벤처/이노비즈/메인비즈</span>
+
     </main>
 
     <div id="footer2"></div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 300);
+                }
+            }
+        });
+    </script>
     <script src="/public/js/hf.js"></script>
 </body>
 

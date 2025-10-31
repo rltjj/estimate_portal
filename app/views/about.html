@@ -18,7 +18,7 @@
   </div>
 
   <main id="container">
-    <span class="section-title">| CEO Message</span>
+    <span class="section-title" id="ceo">| CEO Message</span>
     <p class="ceo-title">주식회사 성진글로벌 인사말</p>
 
     <div class="intro-flex">
@@ -32,7 +32,7 @@
       </p>
     </div>
     <br><br>
-    <span class="section-title">| 오시는 길</span>
+    <span class="section-title" id="location">| 오시는 길</span>
 
     <div class="map-container">
       <div id="map"></div>
@@ -59,6 +59,18 @@
 
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=111b357cdf8acda882993628b4edbd48"></script>
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 300); 
+        }
+      }
+    });
+
     window.onload = function () {
       var container = document.getElementById('map');
       var options = {

@@ -26,6 +26,7 @@ body,
 html {
     margin: 0;
     font-family: 'KoPubWorldDotum', sans-serif;
+    scroll-padding-top: 100px;
 }
 
 header nav.container {

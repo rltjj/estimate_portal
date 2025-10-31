@@ -25,11 +25,16 @@ function initHeaderJS() {
   const hamburger = document.getElementById('hamburgerBtn');
   const navLinks = document.getElementById('navLinks');
   const megaBar = document.getElementById('megaBar');
-  const megaColumns = megaBar.querySelectorAll('.mega-column');
-  const dropdowns = navLinks.querySelectorAll('.dropdown');
   const overlay = document.querySelector('.menu-overlay');
+  const dropdowns = navLinks.querySelectorAll('.dropdown');
 
   if (!hamburger || !navLinks || !megaBar) return;
+
+  const megaMap = {};
+  megaBar.querySelectorAll('.mega-column').forEach(col => {
+    const key = col.dataset.menu;
+    if (key) megaMap[key] = col;
+  });
 
   hamburger.addEventListener('click', () => {
     const isOpen = navLinks.classList.contains('show');
@@ -41,39 +46,44 @@ function initHeaderJS() {
   overlay.addEventListener('click', () => {
     navLinks.classList.remove('show');
     overlay.classList.remove('show');
-    megaColumns.forEach(col => col.classList.remove('show'));
+    Object.values(megaMap).forEach(col => col.classList.remove('show'));
     document.body.style.overflow = '';
   });
 
-  dropdowns.forEach((drop, index) => {
-    drop.addEventListener('click', (e) => {
-      if (window.innerWidth > 1560) return; 
+  dropdowns.forEach(drop => {
+  const link = drop.querySelector('a');
+  const key = link?.dataset.menu;
+  const hasMega = megaMap[key];
 
-      e.preventDefault();
+  drop.addEventListener('click', (e) => {
+    if (window.innerWidth <= 1560 && hasMega) {
+      const isActive = hasMega.classList.contains('show');
 
-      const targetCol = megaColumns[index];
-      const isActive = targetCol.classList.contains('show');
-
-      megaColumns.forEach(col => {
+      Object.values(megaMap).forEach(col => {
         col.classList.remove('show');
-        if (col.parentElement.classList.contains('dropdown')) {
-          col.parentElement.removeChild(col);
-          megaBar.appendChild(col); 
-        }
+        if (col.parentElement !== megaBar) megaBar.appendChild(col);
       });
 
-      if (isActive) return;
+      if (!isActive) {
+        drop.appendChild(hasMega);
+        hasMega.classList.add('show');
+      }
 
-      drop.appendChild(targetCol);
-      targetCol.classList.add('show');
-    });
+      if (e.target === link) {
+        e.preventDefault(); 
+      }
+    }
   });
+});
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1560) {
       navLinks.classList.remove('show');
       overlay.classList.remove('show');
-      megaColumns.forEach(col => col.classList.remove('show'));
+      Object.values(megaMap).forEach(col => {
+        col.classList.remove('show');
+        if (col.parentElement !== megaBar) megaBar.appendChild(col);
+      });
       document.body.style.overflow = '';
     }
   });

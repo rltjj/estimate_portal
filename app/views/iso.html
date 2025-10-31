@@ -21,11 +21,26 @@
 
     <main id="container">
         <span class="section-title">| System Authentication</span>
+        <span class="section-title" id="iso9001">| ISO 9001</span>
+        <span class="section-title" id="iso14001">| ISO 14001</span>
         
     </main>
 
     <div id="footer2"></div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 300);
+                }
+            }
+        });
+    </script>
     <script src="/public/js/hf.js"></script>
 </body>
 
