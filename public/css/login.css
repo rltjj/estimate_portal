@@ -14,49 +14,49 @@ body {
 }
 
 header nav.container {
-    padding: 0.8rem 10%; 
-    max-width: 100%;
-    box-sizing: border-box;
+  padding: 0.2rem 18%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 #int {
-    width: 100%;
-    height: 40vh;
-    max-width: none;
-    margin: 0;
-    padding-top: 35px;
-    box-sizing: border-box;
-    background-image: url('/public/images/int01.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    position: relative;
+  width: 100%;
+  height: 40vh;
+  max-width: none;
+  margin: 0;
+  padding-top: 35px;
+  box-sizing: border-box;
+  background-image: url('/public/images/int01.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
 }
 
 #int>#header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 #int p {
-    font-size: 1.5rem;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 0.3rem;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
 }
 
 #int h1 {
-    text-align: center;
-    font-size: 3rem;
-    color: #ffffff;
-    margin-top: 0;
+  text-align: center;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-top: 0;
 }
 
 .up-btn {
@@ -79,7 +79,7 @@ header nav.container {
   z-index: 3000;
 }
 
-.up-btn img{
+.up-btn img {
   width: 2.5rem;
 }
 
@@ -102,7 +102,7 @@ header nav.container {
   z-index: 3000;
 }
 
-.contact-btn img{
+.contact-btn img {
   width: 2.5rem;
 }
 
@@ -120,13 +120,6 @@ main {
 .login-container h1 {
   margin-bottom: 16px;
   font-size: 32px;
-}
-
-@media (max-width: 768px) {
-  .login-container h1 {
-    font-size: 26px;
-  }
-
 }
 
 .login-container p {
@@ -151,10 +144,38 @@ main {
   width: 100%;
 }
 
-.login-btn.google { background-color: var(--google) }
-.login-btn.naver { background-color: var(--naver) }
+.login-btn.google {
+  background-color: var(--google)
+}
+
+.login-btn.naver {
+  background-color: var(--naver)
+}
 
 .container {
   width: min(1200px, 92vw);
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  #int {
+    height: 28vh;
+  }
+
+  #int h1 {
+    font-size: 2rem;
+  }
+
+  #int p {
+    font-size: 1rem;
+    margin-top: 4rem;
+  }
+
+  main {
+    padding: 60px 20px;
+  }
+
+  .login-btn {
+    font-size: 16px;
+  }
 }

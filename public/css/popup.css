@@ -6,7 +6,7 @@
 .popup {
   position: fixed;
   top: 6rem;
-  right: 4rem;
+  right: 2rem;
   width: 280px;
   max-width: 90%;
   background: #fff;
@@ -15,7 +15,7 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   display: none;
-  font-family: 'KoPubWorldDotum', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   overflow: hidden;
 }
 
@@ -63,12 +63,14 @@
 
 .modal-body textarea,
 .modal-body input {
-  width: 100%;
+  width: 230px;
   padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 14px;
-  font-family: 'KoPubWorldDotum', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   resize: none;
 }
 

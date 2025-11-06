@@ -56,7 +56,7 @@ function initHeaderJS() {
   const hasMega = megaMap[key];
 
   drop.addEventListener('click', (e) => {
-    if (window.innerWidth <= 1560 && hasMega) {
+    if (window.innerWidth <= 1425 && hasMega) {
       const isActive = hasMega.classList.contains('show');
 
       Object.values(megaMap).forEach(col => {

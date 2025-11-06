@@ -6,14 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta property="og:image" content="https://xn--289am1a813bwieviy6bn4kj1r.com/public/images/introlog.png">
   <title>기업경영지원센터</title>
-  <link rel="stylesheet" href="/public/css/main.css">
-  <link rel="stylesheet" href="/public/css/popup.css">
+  <link rel="stylesheet" href="/public/css/font.css">
+  <link rel="stylesheet" href="/public/css/btn.css">
   <link rel="stylesheet" href="/public/css/headerfooter.css">
+  <link rel="stylesheet" href="/public/css/popup.css">
+  <link rel="stylesheet" href="/public/css/main.css">
 </head>
 
 <body>
   <div id="header"></div>
-  <br><br>
 
   <div id="contactModal" class="popup">
     <div class="modal-content">
@@ -44,30 +45,9 @@
             <p><strong>4. 동의 거부권:</strong> 동의를 거부할 수 있으나, 이 경우 서비스 이용이 제한될 수 있습니다.</p>
           </div>
         </form>
-
-        <script>
-          document.getElementById("contactForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const formData = {
-              message: document.getElementById("message").value,
-              phone: document.getElementById("phone").value
-            };
-
-            const res = await fetch("/app/controllers/send-sms.php", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(formData)
-            });
-
-            const result = await res.json();
-            document.getElementById("result").innerText = result.message;
-          });
-        </script>
-
       </div>
       <div class="modal-footer">
-        <button type="submit" form="contactForm">보내기</button>
+        <button type="button" id="sendBtn">보내기</button>
       </div>
     </div>
   </div>
@@ -80,206 +60,143 @@
     <img src="/public/images/speech.png" alt="카톡채널">
   </a>
 
+  <div id="int">
+    <p>정책자금/기업인증을<br><strong>한 번에 해결하는 원스톱 컨설팅</strong></p>
+    <p>소상공인부터 중견까지, 맞춤형 심사전략과 <br class="mobile-only">준비서류 설계로 승인확률을 높입니다.<br>평균 7일 이내 1차 검토, 서류 템플릿 즉시 제공!</p>
+    <a class="btn" href="#services-main">서비스 한눈에 보기</a>
+  </div>
+
   <main class="container">
-    <section class="hero">
-      <div>
-        <span class="pill">빠른상담·전국대행</span>
-        <h1>정부정책자금/법인지원/<br>기업인증/ISO를<br>한 번에 해결하는 <span class="accent">원스톱 컨설팅</span></h1>
-        <p>소상공인부터 중견까지, 맞춤형 심사전략과 준비서류 설계로 승인확률을 높입니다.<br>평균 7일 이내 1차 검토, 서류 템플릿 즉시 제공.</p>
-        <div class="hero-buttons">
-          <a class="btn" href="#contact">빠른 상담 요청</a>
-          <a class="btn" href="#services-main">서비스 한눈에</a>
+    <div id="good">
+      <p>성진글로벌 기업경영지원센터와 함께<br><span>국내를 넘어 글로벌 무대에서 <br class="mobile-only2">인정받는 혁신 기업으로!</span></p>
+      <div id="card">
+        <div class="card">
+          <img src="/public/images/home_01.png" alt="굿">
+          <p>97%</p>
+          <p>재방문의사/만족도</p>
         </div>
-        <div class="kpi">
-          <div class="card">
-            <div class="val">97%</div>
-            <div class="small">재방문의사/만족도</div>
+        <div class="card">
+          <img src="/public/images/home_02.png" alt="검토">
+          <p>7일</p>
+          <p>평균 1차 검토</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="why">
+      <p>성진글로벌 기업경영지원센터가<br><span>도와드리겠습니다!</span></p>
+      <div id="card">
+        <div>
+          <div id="card">
+            <div class="card">
+              <img src="/public/images/home_03.png" alt="사업자금">
+              <p>사업자금 때문에<br>고민이예요.......</p>
+            </div>
+            <div class="card">
+              <img src="/public/images/home_04.png" alt="운영자금">
+              <p>당장 운영자금이<br>필요해요.......</p>
+            </div>
           </div>
-          <div class="card">
-            <div class="val">7일</div>
-            <div class="small">평균 1차 검토</div>
+          <img class="arrow" src="/public/images/home_07.png" alt="화살표">
+          <div class="card2">
+            <p>대표님의 상황에 맞는 적합한<br><span>맞춤형 컨설팅을 제공</span>해 드립니다.</p>
           </div>
-          <div class="card">
-            <div class="val">24시간</div>
-            <div class="small">상담 접수 응답</div>
+        </div>
+        <div>
+          <div id="card"> 
+            <div class="card">
+              <img src="/public/images/home_05.png" alt="뭐가">
+              <p>뭐가 뭔지<br>모르겠어요.....</p>
+            </div>
+            <div class="card">
+              <img src="/public/images/home_06.png" alt="서류">
+              <p>복잡한 서류로<br>막막해요.......</p>
+            </div>
+          </div>
+          <img class="arrow" src="/public/images/home_07.png" alt="화살표">
+          <div class="card2">
+            <p>복잡한 서류 작성과 필요한 자료를<br><span>체계적으로 지원</span>합니다.</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="contact-wrapper">
-        <div class="card contact-card">
-          <div class="item">
-            <div>
-              <strong>운전자금</strong>
-              <div class="ex">원자재의 구매, 생산판매 활동등 기업의 운영에 소요되는 운전자금을 기업의 금융비용 절감을 위해 정부에서 저금리로 지원하는 정부 정책자금입니다.</div>
-            </div>
-            <img src="/public/images/workplace.png" alt="운전자금">
-          </div>
-          <hr>
-          <div class="item">
-            <img src="/public/images/office.png" alt="시설자금">
-            <div>
-              <strong>시설자금</strong>
-              <div class="ex">공장 건물, 사무소, 점포 등 영업 활동의 기초가 되는 고정시설에 투자되는 자금을 의미하며, 시설물 매입이나 공사 착공을 위한 자금입니다. 기계매입전 또는 공사전
-                시설자금을 대출을 신청진행할 수 있습니다.</div>
-            </div>
-          </div>
-          <hr>
-          <div class="item">
-            <div>
-              <strong>특허대출</strong>
-              <div class="ex">기업이 보유한 지적 재산권을 가치평가를 하여 이를 담보로자금을 조달할 수 있도록 평가비용을 지원하는데 성장성과 기술력을 통한 특허 자금 조달 방식입니다.
-              </div>
-            </div>
-            <img src="/public/images/money.png" alt="특허대출">
-          </div>
-          <hr>
-          <div class="item">
-            <img src="/public/images/coins.png" alt="그외">
-            <div>
-              <strong>그외</strong>
-              <div class="ex">중소기업진흥공단, 소상공인진흥공단, 기술보증기금, 신용보증기금, 신용보증재단, 한국무역보험공사, 부산경제진흥원등의 대출 상품에 따라 자금신청이 가능합니다.
-              </div>
-            </div>
-          </div>
+    <div id="services-main">
+      <p class="p1">성진글로벌 기업경영지원센터<br><span>핵심 서비스 안내</span></p>
+      <p class="p2">정책자금</p>
+      <p class="p3">기업 성장 단계별 맞춤형 정책자금을 지원받을 수 있습니다.</p>
+      <div id="card">
+        <div class="card">
+          <img src="/public/images/policy_01_smallbiz.jpg" alt="소상공인">
+          <p>소상공인 정책자금</p>
+          <p>운전자금 · 대환 · 만기연장</p>
+          <a href="/policy.html#smallbiz" id="move">자세히 보기-></a>
+        </div>
+        <div class="card">
+          <img src="/public/images/policy_02_smb.jpg" alt="중소기업">
+          <p>중소기업 정책자금</p>
+          <p>스마트공장·사업전환</p>
+          <a href="/policy.html#smb" id="move">자세히 보기-></a>
+        </div>
+        <div class="card">
+          <img src="/public/images/policy_03_quarantee.jpg" alt="신용기술">
+          <p>신용보증·기술보증</p>
+          <p>신보 · 기보 보증서 연계</p>
+          <a href="/policy.html#guarantee" id="move">자세히 보기-></a>
         </div>
       </div>
-    </section>
-
-    <section id="services-main" class="section">
-      <h2>핵심 서비스</h2>
-      <div class="grid cols-4">
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>정부정책자금</strong>
-            <div class="small">소상공인/소기업/중기업 운전자금·시설자금·창업자금</div>
-          </div>
+      <p class="p2" id="p2">기업인증</p>
+      <p class="p3">기업인증 취득으로 정부지원사업, 정책자금 우대, 절세효과 등 <br class="mobile-only3">혜택을 받을 수 있습니다.</p>
+      <div id="card">
+        <div class="card">
+          <img src="/public/images/corporate_01_lab.jpg" alt="연구소">
+          <p>기업부설연구소</p>
+          <p>R&D 인력·공간 설계부터 신고까지</p>
+          <a href="/policy.html#smallbiz" id="move">자세히 보기-></a>
         </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>법인지원</strong>
-            <div class="small">재무/세무, 가지급금, 노무/법무, 법인전환</div>
-          </div>
+        <div class="card">
+          <img src="/public/images/corporate_02_venture.jpg" alt="벤이메">
+          <p>벤처기업/이노비즈/메인비즈</p>
+          <p>평가 지표진단, 보완 전략 수립</p>
+          <a href="/policy.html#smb" id="move">자세히 보기-></a>
         </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>기업인증</strong>
-            <div class="small">연구소인증, 벤처, 이노비즈, 메인비즈, 그린비즈</div>
-          </div>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>ISO(시스템인증)</strong>
-            <div class="small">ISO9001/14001/TL9000/<br>TS16949/13485/22000</div>
-          </div>
+        <div class="card">
+          <img src="/public/images/corporate_03_iso.jpg" alt="iso">
+          <p>ISO</p>
+          <p>국제표준 경영시스템 인증제도</p>
+          <a href="/policy.html#guarantee" id="move">자세히 보기-></a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <br>
-
-    <section id="services-policy" class="section">
-      <h2>정책자금 바로가기</h2>
-      <div class="grid cols-3">
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>소상공인 정책자금</strong>
-            <div class="small">운전자금 · 대환 · 만기연장</div>
-          </div>
-          <button class="consult-btn" data-link="/#">
-            <a href="http://pf.kakao.com/_mASDn">상담</a>
-          </button>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>중소벤처기업진흥공단</strong>
-            <div class="small">스마트공장·사업전환</div>
-          </div>
-          <button class="consult-btn">
-            <a href="http://pf.kakao.com/_mASDn">상담</a>
-          </button>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>신용보증·기술보증</strong>
-            <div class="small">신보 · 기보 보증서 연계</div>
-          </div>
-          <button class="consult-btn">
-            <a href="http://pf.kakao.com/_mASDn">상담</a>
-          </button>
-        </div>
-    </section>
-
-    <br>
-
-    <section id="services-cert" class="section">
-      <h2>기업인증 패키지</h2>
-      <div class="grid cols-3">
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>기업부설연구</strong>
-            <div class="small">R&D 인력·공간 설계부터 신고까지</div>
-          </div>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>벤처/이노비즈/메인비즈</strong>
-            <div class="small">평가 지표진단, 보완 전략 수립</div>
-          </div>
-        </div>
-    </section>
-
-    <br>
-
-    <section id="services-iso" class="section">
-      <h2>ISO(시스템인증)</h2>
-      <div class="grid cols-4">
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>ISO 9001</strong>
-            <div class="small">품질경영시스템</div>
-          </div>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>ISO 14001</strong>
-            <div class="small">환경경영시스템</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-
-    <section id="services-intro" class="section">
-      <h2>대표전화 : 010.8488.1588</h2>
-      <div class="grid cols-3">
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>상담시간</strong>
-            <div class="small">평일 09:30 ~ 18:00</div>
-          </div>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>주소</strong>
-            <div class="small">부산광역시 남구 신선로 410<br>동명대학교 국제산학협력관 210호</div>
-          </div>
-        </div>
-        <div class="card service" data-link="/#">
-          <div>
-            <strong>이메일</strong>
-            <div class="small">sungjin_g@naver.com</div>
-          </div>
-        </div>
-    </section>
-
-    <br><br>
   </main>
 
   <div id="footer2"></div>
+
   <script src="/public/js/hf.js"></script>
   <script src="/public/js/main.js"></script>
+  <script>
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const form = document.getElementById("contactForm");
+      const formData = {
+        message: form.message.value,
+        phone: form.phone.value
+      };
+
+      const res = await fetch("/app/controllers/send-sms.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await res.json();
+      alert(result.message);
+
+      form.reset();
+      const modal = document.getElementById("contactModal");
+      modal.style.display = "none";
+    });
+  </script>
 </body>
 
 </html>

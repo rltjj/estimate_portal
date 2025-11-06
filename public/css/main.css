@@ -1,356 +1,437 @@
 :root {
-  --bg: #ffffff;
-  --card: #003663;
-  --text: #000000;
-  --text2: #ffffff;
-  --accent: #185aa5;
-  --warn: #ffd166;
+  --bg: #fff;
+  --bg2: #F9F9F9;
+  --bg3: #EFF9FE;
+  --card: #0089CF;
+  --text: #000;
+  --text2: #fff;
+  --accent: #195BA6;
 }
 
-* {
-  box-sizing: border-box;
+body,
+html {
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    scroll-padding-top: 100px;
 }
 
-body {
-  margin: 0;
-  font-family: 'KoPubWorldDotum', sans-serif;
-  background: var(--bg);
+header nav.container {
+    padding: 0.2rem 18%; 
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+#int {
+  background: url("/public/images/b_01_home.jpg") no-repeat center center/cover;
   color: var(--text);
+  text-align: left;
+  padding: 0px 18% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 640px;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+#int p:first-of-type {
+  font-size: 48px;
+  line-height: 1.4;
+  font-weight: 600;
 }
 
-.container {
-  width: min(1400px, 92vw);
-  margin: 0 auto;
+#int p:nth-of-type(2) {
+  font-size: 20px;
+  margin-top: 0;
+  line-height: 1.4;
 }
 
-.hero {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 2rem;
-  padding: 2.8rem 2rem 2.6rem;
-  align-items: start;
-  position: relative;
-}
-
-@media (max-width: 900px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
-  }
-
-  .hero p {
-    font-size: 0.95rem;
-  }
-
-  .hero-buttons {
-    justify-content: center;
-  }
-
-  .kpi {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 500px) {
-  .kpi {
-    grid-template-columns: 1fr;
-  }
-}
-
-.pill {
-  font-size: 1rem;
-  padding: .4rem .6rem;
-  border-radius: 999px;
-  background: var(--warn);
-  color: #1b1200;
-  font-weight: 700;
+#int .btn {
   display: inline-block;
-}
-
-.hero h1 {
-  font-size: clamp(1.9rem, 2.1rem + 1.5vw, 3.2rem);
-  line-height: 1.15;
-  margin: .4rem 0 1rem;
-}
-
-.hero h1 span.accent {
-  color: #185aa5;
-}
-
-.hero p {
-  color: var(--text);
-  font-size: 1.05rem;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: .7rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .85rem 1.1rem;
-  border-radius: 12px;
-  background: var(--accent);
+  margin-top: 30px;
+  background-color: var(--accent);
   color: var(--text2);
-  font-weight: 400;
-  border: none;
-  cursor: pointer;
+  padding: 12px 24px;
+  border-radius: 95px;
+  font-size: 19px;
+  font-weight: 600;
+  transition: 0.3s;
+  text-decoration: none;
+  width: 144px;
 }
 
-.kpi {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-top: 1.2rem;
+#int .btn:hover {
+  background-color: var(--card);
 }
 
-.kpi .card {
+
+@media (max-width: 1008px) {
+  #int {
+    padding: 0px 12% 0;
+    height: 500px;
+  }
+
+  #int p:first-of-type {
+    font-size: 28px;
+  }
+
+  #int p:nth-of-type(2) {
+    font-size: 18px;
+  }
+
+  #int .btn {
+    margin-top: 10px;
+    border-radius: 95px;
+    font-size: 16px;
+    width: 120px;
+  }
+}
+
+@media (max-width: 465px) {
+  #int {
+    padding: 0px 12% 0;
+    height: 350px;
+  }
+
+  #int p:first-of-type {
+    padding-top: 48px;
+    font-size: 20px;
+  }
+
+  #int p:nth-of-type(2) {
+    font-size: 14px;
+  }
+
+  #int .btn {
+    margin-top: 10px;
+    border-radius: 95px;
+    font-size: 12px;
+    width: 90px;
+  }
+}
+
+main.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 1rem 0.5rem 1rem;
-  background: var(--card);
-  border-radius: 16px;
 }
 
-.kpi .val {
-  font-weight: 900;
-  font-size: 2rem;
-  background: var(--text2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+main.container > div {
+  width: 100%;
+  padding: 60px 0;
 }
 
-.kpi .small {
-  color: var(--text2);
-  font-weight: 400; 
-}
-
-.contact-card {
-  position: relative; 
-  border: 6px solid var(--card);
+#good {
   background-color: var(--bg);
-  border-radius: 16px;
-  padding: 0rem 1.2rem 1.2rem;
 }
 
-.contact-card strong {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 1.5rem; 
-  margin-top: 0.5rem;
-  color: var(--accent);
-}
-
-.contact-card .item {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.contact-card .ex {
-  font-size: 0.9rem; 
-  font-weight: 300;
-  color: var(--text); 
-  margin-bottom: 0.5rem;
-}
-
-.contact-card img {
-  width: 80px;
-}
-
-.contact-card hr {
-  margin: 0; 
-  border: 0.1px solid #cfcfcf; 
-}
-
-.contact-wrapper {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  gap: 10px; 
-}
-
-.up-btn {
-  position: fixed;
-  bottom: 100px;
-  right: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 10px auto 0;
-  background-color: #ccc;
-  color: var(--text);
-  border: none;
-  border-radius: 999px;
-  font-size: 1.2rem;
-  padding: 1rem 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  z-index: 3000;
-}
-
-.up-btn img{
-  width: 2.5rem;
-}
-
-.contact-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 10px auto 0;
-  background-color: var(--warn);
-  color: var(--text);
-  border: none;
-  border-radius: 999px;
-  font-size: 1.2rem;
-  padding: 1rem 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  z-index: 3000;
-}
-
-.contact-btn img{
-  width: 2.5rem;
-}
-
-@media (max-width: 768px) {
-  .contact-card {
-    padding: 1rem;
-  }
-
-  .contact-card .contact-btn {
-    position: static;
-    margin: 0 auto 1rem;
-    display: block;
-  }
-}
-
-.section {
-  position: relative;
-  padding: 1rem 2rem;
-}
-
-.section::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+#why, #how{
+  background-color: var(--bg2);
 }
 
 #services-main {
-  background-image: url('../images/Service.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-color: var(--bg3);
 }
 
-#services-policy {
-  background-image: url('../images/policy.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-#services-cert {
-  background-image: url('../images/Package.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-#services-iso {
-  background-image: url('../images/iso.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-#services-intro {
-  background-image: url('../images/phone.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-
-.section h2 {
-  font-size: clamp(1.4rem, 1.3rem + .9vw, 2rem);
-  margin: 0 0 1rem;
-}
-
-.grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-}
-
-.card.service {
+main.container #card {
   display: flex;
-  flex-direction: row;  
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 1.5rem 2rem;
-  border-radius: 16px;
-  background: #003663;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.card.service > div {
+/*------good------*/
+#good p {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#good p span {
+  color: var(--accent);
+}
+
+#good .card {
+  background-color: var(--card);
+  width: 383px;
+  height: 282px;
+  border-radius: 16px;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  margin: 60px 0;
 }
 
-.card.service .small {
-  font-size: 14px;
+#good .card img {
+  width: 90px;
+  height: 100px;
+  margin-bottom: 4px;
 }
 
-.card.service .consult-btn {
-  margin-left: auto;
-  background: var(--accent);
+#good .card p {
+  margin: 6px 0;
+  text-align: center;
+}
+
+#good .card p:first-of-type {
+  padding-top: 0;
+  font-size: 32px;
+  font-weight: 700;
   color: var(--text2);
-  font-size: 16px;
-  border: none;
-  border-radius: 16px;
-  padding: 1rem 1.5rem;
-  cursor: pointer;
 }
 
-.card.service .consult-btn a {
-  color: inherit;
+#good .card p:nth-of-type(2) {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text2);
+}
+
+.mobile-only2 {
+  display: none;
+}
+
+@media (max-width: 860px){
+  .mobile-only2 {
+    display: inline;
+  }
+
+  main.container #card {
+    gap: 10px;
+  }
+
+  #good p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  #good p span {
+    color: var(--accent);
+  }
+
+  #good .card {
+    width: 184px;
+    height: 140px;
+  }
+
+  #good .card img {
+    width: 72px;
+    height: 80px;
+    margin-bottom: 4px;
+  }
+  
+  #good .card p:first-of-type {
+    font-size: 20px;
+  }
+
+  #good .card p:nth-of-type(2) {
+    font-size: 14px;
+  }
+}
+/*------why------*/
+#why p {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#why p span {
+  color: var(--accent);
+}
+
+#why .card {
+  background-color: var(--bg);
+  border-radius: 16px;
+  width: 280px;
+  height: 232px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#why .card img {
+  width: 80px;
+  height: auto;
+}
+
+#why .card p {
+  font-size: 24px;
+  text-align: left;
+}
+
+#why .arrow{
+  width: 65px;
+}
+
+#why .card2 {
+  background-color: var(--bg3);
+  border-radius: 16px;
+  padding: 10px;
+  margin-top: 16px;
+  margin-bottom: 40px;
+}
+
+#why .card2 p {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+#why .card2 span {
+  color: var(--accent);
+}
+
+@media (max-width: 655px){
+  #why p {
+  font-size: 20px;
+}
+
+#why .card {
+  width: 200px;
+  height: 160px;
+}
+
+#why .card img {
+  width: 72px;
+  height: auto;
+}
+
+#why .card p {
+  font-size: 16px;
+  text-align: left;
+}
+
+#why .arrow{
+  width: 48px;
+}
+
+#why .card2 p {
+  font-size: 16px;
+}
+}
+
+/*-------services-main-------*/
+#services-main .p1 {
+  font-size: 40px;
+  line-height: 1.4;
+  font-weight: 700;
+  padding-bottom: 30px;
+}
+
+#services-main .p1 span{
+  color: var(--accent);
+}
+
+#services-main .p2 {
+  font-size: 32px;
+  line-height: 0.5;
+  font-weight: 700;
+}
+
+#services-main .p3 {
+  font-size: 19px;
+  line-height: 0;
+  font-weight: 400;
+  padding-bottom: 40px;
+}
+
+#services-main .card {
+  background-color: var(--bg);
+  padding-bottom: 40px;
+  margin-bottom: 80px;
+  border-radius: 16px;
+  text-align: left;
+}
+
+#services-main .card img {
+  width: 384px;
+  height: 276px;
+  border-radius: 16px 16px 0 0;
+}
+
+#services-main .card p:first-of-type {
+  padding: 30px 0 0 28px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 0;
+}
+
+#services-main .card p:nth-of-type(2) {
+  padding: 0 0 0 28px;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+#services-main a {
+  padding: 0 0 16px 28px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+#services-main a#move {
+  display: inline-block;
+  margin-top: 19px;
+  font-weight: 700;
+  color: var(--accent);
   text-decoration: none;
 }
 
-.consult-btn {
-  background: var(--accent);
-  color: var(--text2);
+#services-main a#move:hover {
+  text-decoration: underline;
+}
+
+.mobile-only3 {
+  display: none;
+}
+
+@media (max-width: 800px){
+  .mobile-only3 {
+  display: inline;
+}
+
+  #services-main .p1 {
+  font-size: 20px;
+}
+
+#services-main .p2 {
+  font-size: 18px;
+}
+
+#services-main #p2 {
+  margin-top: 40px;
+}
+
+#services-main .p3 {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+#services-main .card {
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+#services-main .card img {
+  width: 296px;
+  height: 200px;
+}
+
+#services-main .card p:first-of-type {
   font-size: 16px;
-  border: none;
-  border-radius: 16px;
-  padding: 1rem 1.5rem;
-  cursor: pointer;
+}
+
+#services-main .card p:nth-of-type(2) {
+  font-size: 14px;
+}
+
+#services-main a {
+  font-size: 14px;
+}
 }

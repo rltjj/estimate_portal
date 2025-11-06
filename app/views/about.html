@@ -5,8 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성진글로벌 경영지원 서비스</title>
-  <link rel="stylesheet" href="/public/css/about.css">
+  <link rel="stylesheet" href="/public/css/font.css">
+  <link rel="stylesheet" href="/public/css/btn.css">
   <link rel="stylesheet" href="/public/css/headerfooter.css">
+  <link rel="stylesheet" href="/public/css/about.css">
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=ppzh32nnc3"></script>
 </head>
 
 <body>
@@ -65,7 +68,6 @@
 
   <div id="footer2"></div>
 
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=111b357cdf8acda882993628b4edbd48"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -80,23 +82,45 @@
     });
 
     window.onload = function () {
-      var container = document.getElementById('map');
-      var options = {
-        center: new kakao.maps.LatLng(35.1210, 129.0996),
-        level: 3
+      const mapOptions = {
+        center: new naver.maps.LatLng(35.1210, 129.0996),
+        zoom: 16,
+        zoomControl: true,
+        zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT }
       };
 
-      var map = new kakao.maps.Map(container, options);
+      const map = new naver.maps.Map('map', mapOptions);
 
-      var markerPosition = new kakao.maps.LatLng(35.1210, 129.0996);
-      var marker = new kakao.maps.Marker({
-        position: markerPosition
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(35.1210, 129.0996),
+        map: map,
+        title: '주식회사 성진글로벌'
       });
-      marker.setMap(map);
+
+      const infoWindow = new naver.maps.InfoWindow({
+        content: `
+          <div style="padding:10px; font-size:14px;">
+            <b>주식회사 성진글로벌</b><br>
+            부산광역시 남구 신선로 410<br>
+            동명대학교 산학협력관 210호
+          </div>
+        `
+      });
+
+      naver.maps.Event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+      });
 
       document.getElementById('directionBtn').addEventListener('click', function () {
-        var url = "https://map.kakao.com/link/to/동명대학교산학협력관,35.1210,129.0996";
-        window.open(url, "_blank");
+        const destinationText = "부산광역시 남구 신선로 410 동명대학교 산학협력관 210호 성진글로벌";
+        const destination = encodeURIComponent(destinationText);
+
+        const directionsUrl = `https://map.naver.com/v5/directions/-/${destination}`;
+
+        const searchUrl = `https://map.naver.com/v5/search/${destination}`;
+
+        window.open(directionsUrl, '_blank')
+          || window.open(searchUrl, '_blank');
       });
     }
   </script>

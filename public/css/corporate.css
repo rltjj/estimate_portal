@@ -1,37 +1,12 @@
-@font-face {
-    font-family: 'KoPubWorldDotum';
-    src: url('../fonts/KoPubWorldDotum-Light.woff2') format('woff2'),
-        url('../fonts/KoPubWorldDotum-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'KoPubWorldDotum';
-    src: url('../fonts/KoPubWorldDotum-Medium.woff2') format('woff2'),
-        url('../fonts/KoPubWorldDotum-Medium.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'KoPubWorldDotum';
-    src: url('../fonts/KoPubWorldDotum-Bold.woff2') format('woff2'),
-        url('../fonts/KoPubWorldDotum-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-}
-
 body,
 html {
     margin: 0;
-    padding: 0;
-    font-family: 'KoPubWorldDotum', sans-serif;
+    font-family: 'Pretendard', sans-serif;
     scroll-padding-top: 100px;
 }
 
 header nav.container {
-    padding: 0.8rem 10%; 
+    padding: 0.2rem 18%; 
     max-width: 100%;
     box-sizing: border-box;
 }
