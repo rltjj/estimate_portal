@@ -18,7 +18,7 @@
   z-index: 3000;
 }
 
-.up-btn img{
+.up-btn img {
   width: 2.5rem;
 }
 
@@ -41,6 +41,25 @@
   z-index: 3000;
 }
 
-.contact-btn img{
+.contact-btn img {
   width: 2.5rem;
+}
+
+@media (max-width: 800px) {
+  .up-btn {
+    margin: 6px auto 0;
+    bottom: 88px;
+  }
+
+  .up-btn img {
+    width: 1.2rem;
+  }
+
+  .contact-btn {
+    margin: 6px auto 0;
+  }
+
+  .contact-btn img {
+    width: 1.2rem;
+  }
 }

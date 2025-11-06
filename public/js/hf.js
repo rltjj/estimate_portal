@@ -41,6 +41,8 @@ function initHeaderJS() {
     navLinks.classList.toggle('show', !isOpen);
     overlay.classList.toggle('show', !isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
+
+    hamburger.textContent = isOpen ? '☰' : '✕';
   });
 
   overlay.addEventListener('click', () => {

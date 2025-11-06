@@ -87,7 +87,27 @@ header nav.container {
   }
 }
 
-@media (max-width: 465px) {
+@media (max-width: 760px){
+  #int {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #int::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 1;
+  }
+
+  #int * {
+    position: relative;
+    z-index: 2; 
+  }
+}
+
+@media (max-width: 480px) {
   #int {
     padding: 0px 12% 0;
     height: 350px;
@@ -294,7 +314,7 @@ main.container #card {
 }
 
 #why .card {
-  width: 200px;
+  width: 176px;
   height: 160px;
 }
 
@@ -405,7 +425,7 @@ main.container #card {
 }
 
 #services-main #p2 {
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 #services-main .p3 {
