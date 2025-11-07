@@ -18,7 +18,7 @@ header nav.container {
   width: 100%;
   height: 100px;
   margin: 0 auto;
-  padding: 0 18%; 
+  padding: 0 18%;
   position: relative;
 }
 
@@ -92,7 +92,7 @@ header nav.container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding: 1.5rem 20% 1.5rem 0;
+  padding: 1.5rem 18% 1.5rem 0;
   background: #fff;
   opacity: 0;
   visibility: hidden;
@@ -221,7 +221,7 @@ header nav.container {
     display: block;
   }
 
-  
+
   .navlinks a[href="/login"]:hover {
     background-color: #003663;
     color: #fff;
@@ -264,13 +264,13 @@ header nav.container {
     padding: 0.5rem 2rem !important;
     margin: 0 !important;
     font-size: 0.95rem !important;
-    background-color: #185aa5 !important; 
+    background-color: #185aa5 !important;
     color: #fff !important;
     line-height: 1.5rem !important;
     width: 100% !important;
     white-space: nowrap !important;
     overflow-x: auto !important;
-    border-top: 1px solid rgba(255,255,255,0.12) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
   }
 
   .navlinks .mega-column.show,
@@ -409,18 +409,18 @@ header nav.container {
   }
 
   .footer-btn p {
-    font-size: 1rem;
+    font-size: 20px;
   }
 
   .footer-btn-link {
-    font-size: 1.2rem;
+    font-size: 20px;
     padding: 0.6rem 1.2rem;
   }
 
   .footer-inner {
     padding: 2rem 1rem;
   }
-  
+
   .footer-contact {
     flex-direction: column;
     gap: 1rem;
@@ -428,12 +428,13 @@ header nav.container {
   }
 
   .contact-item {
-    text-align: left; 
-    width: 100%; 
+    text-align: left;
+    width: 100%;
   }
 
   .contact-label {
     margin: 0 0 10px 0;
+    font-size: 12px;
   }
 
   .contact-value {
@@ -441,16 +442,30 @@ header nav.container {
   }
 
   .footer-company {
-    font-size: 0.8rem;
+    font-size: 12px;
     line-height: 1.4;
   }
 
   .footer-policies {
-    font-size: 0.8rem;
+    font-size: 12px;
     margin-bottom: 10px;
   }
 
   .mobile-only {
     display: inline;
+  }
+}
+
+.mobilef-only {
+  display: none;
+}
+
+@media (max-width: 432px) {
+  .mobilef-only {
+    display: inline;
+  }
+
+  .footer-btn p {
+    line-height: 1.2;
   }
 }
