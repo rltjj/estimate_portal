@@ -48,6 +48,7 @@ header nav.container {
 
 #int .btn {
   display: inline-block;
+  width: fit-content;
   margin-top: 30px;
   background-color: var(--accent);
   color: var(--text2);
@@ -57,13 +58,15 @@ header nav.container {
   font-weight: 600;
   transition: 0.3s;
   text-decoration: none;
-  width: 144px;
 }
 
 #int .btn:hover {
   background-color: var(--card);
 }
 
+.mobile-only4 {
+  display: none;
+}
 
 @media (max-width: 1008px) {
   #int {
@@ -83,7 +86,6 @@ header nav.container {
     margin-top: 10px;
     border-radius: 95px;
     font-size: 16px;
-    width: 120px;
   }
 }
 
@@ -114,18 +116,21 @@ header nav.container {
   }
 
   #int p:first-of-type {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   #int p:nth-of-type(2) {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   #int .btn {
     margin-top: 10px;
     border-radius: 95px;
-    font-size: 12px;
-    width: 90px;
+    font-size: 14px;
+  }
+
+  .mobile-only4 {
+    display: inline;
   }
 }
 
@@ -210,7 +215,8 @@ main.container #card {
   color: var(--text2);
 }
 
-.mobile-only2 {
+.mobile-only2,
+.mobileg-only {
   display: none;
 }
 
@@ -224,7 +230,7 @@ main.container #card {
   }
 
   #good p {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     line-height: 1.4;
   }
@@ -245,12 +251,38 @@ main.container #card {
   }
 
   #good .card p:first-of-type {
+    font-size: 22px;
+  }
+
+  #good .card p:nth-of-type(2) {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 376px) {
+  .mobileg-only {
+    display: inline;
+  }
+
+  #good .card {
+    width: 164px;
+    height: 124px;
+  }
+
+  #good .card img {
+    width: 64px;
+    height: 72px;
+    margin-bottom: 4px;
+  }
+
+  #good .card p:first-of-type {
     font-size: 20px;
   }
 
   #good .card p:nth-of-type(2) {
     font-size: 14px;
   }
+
 }
 
 /*------why------*/
@@ -325,7 +357,7 @@ main.container #card {
   }
 
   #why .card p {
-    font-size: 16px;
+    font-size: 18px;
     text-align: left;
   }
 
@@ -334,7 +366,32 @@ main.container #card {
   }
 
   #why .card2 p {
-    font-size: 16px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 361px) {
+  #why .card {
+    width: 152px;
+    height: 152px;
+  }
+
+  #why .card img {
+    width: 72px;
+    height: auto;
+  }
+
+  #why .card p {
+    font-size: 18px;
+    text-align: left;
+  }
+
+  #why .arrow {
+    width: 48px;
+  }
+
+  #why .card2 p {
+    font-size: 18px;
   }
 }
 
@@ -418,11 +475,11 @@ main.container #card {
   }
 
   #services-main .p1 {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   #services-main .p2 {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   #services-main #p2 {
@@ -430,7 +487,7 @@ main.container #card {
   }
 
   #services-main .p3 {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.2;
   }
 
@@ -445,14 +502,14 @@ main.container #card {
   }
 
   #services-main .card p:first-of-type {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   #services-main .card p:nth-of-type(2) {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   #services-main a {
-    font-size: 12px;
+    font-size: 14px;
   }
 }

@@ -434,7 +434,7 @@ header nav.container {
 
   .contact-label {
     margin: 0 0 10px 0;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .contact-value {
@@ -442,12 +442,12 @@ header nav.container {
   }
 
   .footer-company {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.4;
   }
 
   .footer-policies {
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
   }
 

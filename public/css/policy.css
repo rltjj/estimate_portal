@@ -111,17 +111,17 @@ header nav.container {
     }
 
     #intro .card p {
-        font-size: 24px;
+        font-size: 26px;
     }
 }
 
 @media (max-width: 700px) {
     #intro p:first-of-type {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     #intro p:nth-of-type(2) {
-        font-size: 12px;
+        font-size: 14px;
         padding-bottom: 32px;
     }
 
@@ -141,6 +141,12 @@ header nav.container {
 
     #intro .card p {
         font-size: 20px;
+    }
+}
+
+@media (max-width: 404px) {
+    #intro .card p {
+        font-size: 16px;
     }
 }
 
@@ -190,7 +196,7 @@ header nav.container {
 
 @media (max-width: 660px) {
     #ex #card {
-        gap: 10px;
+        gap: 8px;
     }
 
     #ex .card {
@@ -200,17 +206,32 @@ header nav.container {
 
     #ex .card img {
         width: 100%;
-        height: 160px;
+        height: 100px;
     }
 
     #ex .card p:first-of-type {
         padding: 16px 0 0 16px;
-        font-size: 18px;
+        font-size: 20px;
     }
 
     #ex .card p:nth-of-type(2) {
         padding: 0 16px 0 16px;
-        font-size: 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 367px) {
+    #ex #card {
+        gap: 16px;
+    }
+
+    #ex .card {
+        width: 240px;
+        height: 360px;
+    }
+
+    #ex .card img {
+        height: 160px;
     }
 }
 
@@ -321,7 +342,7 @@ header nav.container {
 
 @media (max-width: 700px) {
     #section .title p {
-        font-size: 20px;
+        font-size: 22px;
         margin-top: 12px;
     }
 
@@ -331,12 +352,12 @@ header nav.container {
     }
 
     #section .detail>p:first-of-type {
-        font-size: 12px;
+        font-size: 14px;
         margin-top: 16px;
     }
 
     #section .detail>p:nth-of-type(2) {
-        font-size: 16px;
+        font-size: 18px;
         margin-top: 28px;
         margin-bottom: 16px;
     }
@@ -347,7 +368,7 @@ header nav.container {
 
     #section .posi p {
         gap: 4px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .posi p::before {
@@ -355,6 +376,6 @@ header nav.container {
         height: 14px;
         border-radius: 50%;
         border: var(--card) 2px solid;
-        font-size: 12px;
+        font-size: 14px;
     }
 }
