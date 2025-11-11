@@ -85,7 +85,13 @@
         .then(data => {
           if (data.success) {
             alert('신청 완료!');
-            window.location.href = '/customer';
+            const hasWebsite = selectedProducts.some(p => p.product_id == 2);
+
+            if (hasWebsite) {
+              window.location.href = `/requirements.html?application_id=${data.application_id}`;
+            } else {
+              window.location.href = '/customer';
+            }
           } else {
             alert('신청 실패: ' + data.message);
           }

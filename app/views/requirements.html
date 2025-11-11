@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈페이지 제작 요구사항 입력</title>
+    <link rel="stylesheet" href="/public/css/font.css">
+    <link rel="stylesheet" href="/public/css/checklist.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>홈페이지 제작 요구사항 입력</h1>
+
+        <form id="requirementsForm"></form>
+
+        <button type="button" id="submitRequirements">제출</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const applicationId = urlParams.get('application_id');
+        if (!applicationId) {
+            alert('유효하지 않은 신청 ID입니다.');
+            window.location.href = '/customer';
+        }
+
+        const requirementsForm = document.getElementById('requirementsForm');
+
+        fetch('/app/controllers/get_requirements.php')
+            .then(res => res.json())
+            .then(requirements => {
+                const grouped = requirements.reduce((acc, item) => {
+                    if (!acc[item.title]) acc[item.title] = [];
+                    acc[item.title].push(item);
+                    return acc;
+                }, {});
+
+                for (const title in grouped) {
+                    const groupDiv = document.createElement('div');
+                    groupDiv.classList.add('requirement-group');
+                    groupDiv.innerHTML = `<h3>${title}</h3>`;
+
+                    grouped[title].forEach(item => {
+                        const div = document.createElement('div');
+
+                        if (item.input_type === 'checkbox') {
+                            div.innerHTML = `
+                <label>
+                  <input type="checkbox" name="req_${item.id}" value="${item.content}">
+                  ${item.content}
+                </label>
+              `;
+                        } else {
+                            div.innerHTML = `
+                <label>${item.content}<br>
+                  <input type="text" name="req_${item.id}" placeholder="직접 입력" ${item.content.includes('참조 사이트 제공') ? 'required' : ''}>
+                </label>
+              `;
+                        }
+
+                        groupDiv.appendChild(div);
+                    });
+
+                    requirementsForm.appendChild(groupDiv);
+                }
+            });
+
+        document.getElementById('submitRequirements').addEventListener('click', () => {
+            const formData = new FormData(requirementsForm);
+            const dataObj = {};
+            formData.forEach((value, key) => dataObj[key] = value);
+
+            const homepageChecked = Object.keys(dataObj).some(k => k.startsWith('req_1') || k.startsWith('req_2') || k.startsWith('req_3') || k.startsWith('req_5'));
+            if (!homepageChecked) {
+                alert('홈페이지 목적 중 하나 이상 선택해주세요.');
+                const firstHomepage = document.querySelector('input[name^="req_1"], input[name^="req_2"], input[name^="req_3"], input[name^="req_5"]');
+                if (firstHomepage) firstHomepage.scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+            const visitorChecked = Object.keys(dataObj).some(k => k.startsWith('req_6') || k.startsWith('req_7') || k.startsWith('req_8') || k.startsWith('req_9'));
+            if (!visitorChecked) {
+                alert('예상 방문자 중 하나 이상 선택해주세요.');
+                const firstVisitor = document.querySelector('input[name^="req_6"], input[name^="req_7"], input[name^="req_8"], input[name^="req_9"]');
+                if (firstVisitor) firstVisitor.scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+            const refInput = document.querySelector('input[name="req_13"]');
+            if (!refInput || !refInput.value.trim()) {
+                alert('참조 사이트 제공 항목을 반드시 입력해주세요.');
+                if (refInput) refInput.scrollIntoView({ behavior: "smooth", block: "center" });
+                refInput.focus();
+                return;
+            }
+
+            const requirementsArray = Object.entries(dataObj).map(([key, value]) => {
+                const requirement_id = key.replace('req_', '');
+                return { requirement_id, value };
+            });
+
+            const payload = {
+                application_id: applicationId,
+                requirements: requirementsArray
+            };
+
+            fetch('/app/controllers/submit_requirements.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        alert('요구사항 제출 완료!');
+                        window.location.href = '/customer';
+                    } else {
+                        alert('제출 실패: ' + result.message);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('요청 중 오류가 발생했습니다.');
+                });
+        });
+    </script>
+</body>
+
+</html>

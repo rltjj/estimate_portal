@@ -30,4 +30,7 @@ foreach($products as $p){
     $stmt->execute([$application_id, $p['product_id'], $p['price']]);
 }
 
-echo json_encode(['success' => true]);
+echo json_encode([
+    'success' => true,
+    'application_id' => $application_id
+]);

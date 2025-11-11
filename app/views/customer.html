@@ -96,8 +96,8 @@
 
           if (app.status === 'QUOTED') {
             actionButtons = '<span>이메일을 확인해주세요.</span>';
-          } else if (app.status === 'READY') {
-            actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
+          // } else if (app.status === 'READY') {
+          //   actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
           } else if (app.status === 'PAID') {
             actionButtons = `<span>결제완료</span>`;
           } else if (app.status === 'REQUESTED') {
