@@ -5,7 +5,7 @@
     --bg: #f4f7fb;
     --shadow: 0 6px 18px rgba(12, 20, 40, 0.06);
     --radius: 12px;
-    font-family: Inter, "Noto Sans KR", system-ui, sans-serif;
+    font-family: Inter, "Pretendard", system-ui, sans-serif;
 }
 
 body {
@@ -209,4 +209,31 @@ button.ghost {
         grid-template-columns: 1fr;
         padding: 10px;
     }
+}
+
+#requirementsEditor {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(12, 20, 40, 0.06);
+}
+
+#requirementsEditor h2 {
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+#requirementsEditor .requirement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#requirementsEditor .requirement-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f8f9fc;
+    font-size: 14px;
 }

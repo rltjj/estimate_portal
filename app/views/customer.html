@@ -96,8 +96,8 @@
 
           if (app.status === 'QUOTED') {
             actionButtons = '<span>이메일을 확인해주세요.</span>';
-          // } else if (app.status === 'READY') {
-          //   actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
+            // } else if (app.status === 'READY') {
+            //   actionButtons = `<button class="pay-btn" data-id="${app.id}">결제하러가기</button>`;
           } else if (app.status === 'PAID') {
             actionButtons = `<span>결제완료</span>`;
           } else if (app.status === 'REQUESTED') {
@@ -150,6 +150,70 @@
       })
       .catch(err => console.error('Fetch error:', err));
 
+    document.addEventListener('click', async (e) => {
+      const tr = e.target.closest('tr');
+      if (!tr || e.target.tagName === 'BUTTON') return;
+
+      const existing = tr.nextElementSibling;
+      if (existing && existing.classList.contains('req-row')) {
+        existing.remove();
+        return;
+      }
+
+      document.querySelectorAll('.req-row').forEach(row => row.remove());
+
+      const appId = tr.querySelector('.cancel-btn, .pay-btn, .sign-btn, .view-req-btn')?.dataset.id || tr.children[0].dataset.id;
+      if (!appId) return;
+
+      const reqRow = document.createElement('tr');
+      reqRow.classList.add('req-row');
+      const td = document.createElement('td');
+      td.colSpan = 5;
+      td.textContent = '요구사항 불러오는 중...';
+      td.style.padding = '15px';
+      td.style.background = '#f9f9f9';
+      reqRow.appendChild(td);
+      tr.insertAdjacentElement('afterend', reqRow);
+
+      try {
+        const res = await fetch(`/app/controllers/get_requirements_by_application.php?application_id=${appId}`);
+        const data = await res.json();
+
+        if (data.success && data.requirements && data.requirements.length > 0) {
+          const grouped = {};
+          data.requirements.forEach(req => {
+            const group = req.title || '기타';
+            if (!grouped[group]) grouped[group] = [];
+            grouped[group].push(req.value || '(입력 없음)');
+          });
+
+          td.innerHTML = '';
+          Object.keys(grouped).forEach(group => {
+            const groupDiv = document.createElement('div');
+            groupDiv.classList.add('requirement-group');
+
+            const titleEl = document.createElement('h3');
+            titleEl.textContent = group;
+            groupDiv.appendChild(titleEl);
+
+            const listEl = document.createElement('ul');
+            grouped[group].forEach(val => {
+              const li = document.createElement('li');
+              li.textContent = val;
+              listEl.appendChild(li);
+            });
+            groupDiv.appendChild(listEl);
+
+            td.appendChild(groupDiv);
+          });
+        } else {
+          td.textContent = '요구사항 데이터가 없습니다.';
+        }
+      } catch (err) {
+        console.error(err);
+        td.textContent = '요구사항을 불러오는 중 오류가 발생했습니다.';
+      }
+    });
   </script>
 </body>
 
